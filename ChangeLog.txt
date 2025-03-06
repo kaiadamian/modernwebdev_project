@@ -1,6 +1,6 @@
 # Change Log 
 ## v0.2.0
-- improved UI/UX with CSS 
+- improved UI/UX with CSS on individual pages 
 - added Authenticate, Navigation, and Register components 
 - added ideas for future work
 - added user interactivity and logging in back4app

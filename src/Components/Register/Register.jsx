@@ -10,3 +10,5 @@ function Register() {
 }
 
 export default Register
+
+// in the future this tab would have specific css -- planning to implement some by deadline 

@@ -92,7 +92,7 @@ useEffect(() => {
         value={formData.course}
         onChange={handleChange}
       >
-        <option value="" disabled>Select a course</option>
+        <option value="" disabled>Select a course</option> 
         {courses.map((course) => (
           <option key={course.id} value={course.id}> {/* course.id is the objectId */}
             {course.id} {/* Display the ageGroup or any other field */}
