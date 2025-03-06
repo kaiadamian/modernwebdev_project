@@ -38,6 +38,7 @@ import { useEffect, useState } from 'react';
 import { getAllCourses } from '../../Common/Services/CourseService.js';
 import Parse from 'parse';
 
+// in the future, this section would also account for unenrolling from a class via a delete service 
 const RegisterDropdown = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null); // Storing the selected course object

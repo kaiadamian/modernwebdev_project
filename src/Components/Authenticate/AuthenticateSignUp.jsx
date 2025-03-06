@@ -65,7 +65,7 @@ useEffect(() => {
           console.log(course.id); // Log the 'id' field, which should be the objectId
         });
       })
-      .catch((error) => console.error("Error fetching courses:", error));
+      .catch((error) => console.error("Error fetching courses:", error)); // in the future, we would like more robust error handling 
   }, []);
 
   const handleChange = (e) => {

@@ -1,4 +1,12 @@
 # Change Log 
 ## v0.2.0
+- improved UI/UX with CSS 
+- added Authenticate, Navigation, and Register components 
+- added ideas for future work
+- added user interactivity and logging in back4app
 
 ## v0.1.0
+- set up project structure with React
+- created initial page (Home)
+- implemented basic styling from feature 2
+- defined basic dependencies
