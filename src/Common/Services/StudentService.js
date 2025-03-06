@@ -47,7 +47,7 @@ export const createStudent = (firstName, lastName, age, belt, courseId) => {
     }).catch((error) => {
       console.error('Error creating student:', error);
     });
-  };
+};
   
 
 // CREATE operation - new student

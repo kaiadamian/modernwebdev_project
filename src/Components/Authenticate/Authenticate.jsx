@@ -4,7 +4,7 @@ import './Authenticate.css'
 function Authenticate() {
     return (
       <section>
-        <h1>Welcome to the Authentication component</h1> 
+        <h1>Sign In</h1>
         <AuthenticateSignUp />
       </section>
     )
