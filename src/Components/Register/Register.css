@@ -4,4 +4,48 @@ h1 {
     font-weight: 500;
     font-size: 36px;
   }
+
+  h2 { 
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+  }
+
+  p { 
+    font-family: "Montserrat", sans-serif;
+  }
+button {
+    background-color: #ffde59;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+input[type=text], input[type=number], select {
+    width: 15%; 
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+  
+  input[type=submit] {
+    width: 15%;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
   

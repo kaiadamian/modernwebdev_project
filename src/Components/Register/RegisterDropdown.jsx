@@ -33,6 +33,7 @@
 // }
 
 // export default RegisterDropdown
+import './Register.css'
 
 import { useEffect, useState } from 'react';
 import { getAllCourses } from '../../Common/Services/CourseService.js';

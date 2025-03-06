@@ -1,4 +1,5 @@
 import RegisterDropdown from './RegisterDropdown.jsx'
+import './Register.css'
 
 function Register() {
   return (
