@@ -30,6 +30,21 @@ useEffect(() => {
   const handleSubmit = (e) => {
     e.preventDefault()
     createStudent(formData.firstName, formData.lastName, parseInt(formData.age), formData.belt, formData.course)
+    .then(() => {
+      alert('student created successfully!');
+
+      // clear the form by resetting the formData state
+      setFormData({
+        firstName: '',
+        lastName: '',
+        age: '',
+        belt: '',
+        course: ''
+      })
+    })
+    .catch((error) => {
+      console.error('error creating student:', error);
+    })
   }
 
   return (
@@ -48,7 +63,7 @@ useEffect(() => {
         <option value="" disabled>Select a course</option> 
         {courses.map((course) => (
           <option key={course.id} value={course.id}>
-            {course.get('ageGroup')}
+            {course.get('ageGroup')} {course.get('days')} {course.get('time')}
           </option>
         ))}    
       </select> 
