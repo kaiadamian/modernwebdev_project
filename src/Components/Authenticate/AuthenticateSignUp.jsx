@@ -1,35 +1,36 @@
-import { useState, useEffect } from 'react';
-import { getAllCourses } from '../../Common/Services/CourseService.js';
-import { createStudent } from '../../Common/Services/StudentService.js';
+import { useState, useEffect } from 'react'
+import { getAllCourses } from '../../Common/Services/CourseService.js'
+import { createStudent } from '../../Common/Services/StudentService.js'
 
-const StudentForm = () => {
+/* retrieves user's information and creates a student with those attributes */
+const AuthenticateSignUp = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     age: '',
     belt: '',
-    course: ''  // Store the selected course ID
-  });
+    course: ''
+  })
 
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState([])
 
 useEffect(() => {
     getAllCourses()
       .then((fetchedCourses) => {
-        setCourses(fetchedCourses); // Set the fetched courses in state
+        setCourses(fetchedCourses) // set the fetched courses in state
       })
-      .catch((error) => console.error("Error fetching courses:", error)); // in the future, we would like more robust error handling 
-  }, []);
+      .catch((error) => console.error("error fetching courses:", error)) // in the future, we would like more robust error handling 
+  }, [])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    createStudent(formData.firstName, formData.lastName, parseInt(formData.age), formData.belt, formData.course);
-  };
+    e.preventDefault()
+    createStudent(formData.firstName, formData.lastName, parseInt(formData.age), formData.belt, formData.course)
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -53,7 +54,7 @@ useEffect(() => {
       </select> 
       <button type="submit">Create Student</button>
     </form>
-  );
-};
+  )
+}
 
-export default StudentForm;
+export default AuthenticateSignUp

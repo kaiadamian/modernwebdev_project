@@ -9,6 +9,5 @@ function Authenticate() {
       </section>
     )
 }
-// in the future, these classes would not have garbage values 
 
 export default Authenticate

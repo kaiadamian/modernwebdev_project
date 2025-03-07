@@ -10,7 +10,7 @@ function Components() {
           <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/classes" element={<Courses />} />
+            <Route path="/courses" element={<Courses />} />
             <Route path="/authenticate" element={<Authenticate />} />
           </Routes>
         </Router>
