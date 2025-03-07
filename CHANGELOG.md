@@ -1,19 +1,26 @@
-# Change Log 
+# Changelog
+
 ## v0.2.0
-added: 
-- added Authenticate, Navigation, and Register components 
-- added ideas for future work
-- added user interactivity and logging in back4app
-changed: 
-- changed from ND class courses to Jiu-Jitsu courses
-fixed: 
-- improved UI/UX with CSS on individual pages 
+**Added:**
+- Authenticate, Navigation, and Register components
+- Ideas for future work
+- User interactivity and login functionality with Back4App
+
+**Changed:**
+- Replaced ND class courses with Jiu-Jitsu courses
+
+**Fixed:**
+- Improved UI/UX with CSS on individual pages
+
+---
 
 ## v0.1.0
-added: 
-- set up project structure with React
-- created initial page (Home)
-- implemented basic styling from feature 2
-- defined basic dependencies
-changed:
-fixed:
+**Added:**
+- Set up project structure with React
+- Created initial Home page
+- Implemented basic styling (from feature 2)
+- Defined basic dependencies
+
+**Changed:**
+
+**Fixed:**
