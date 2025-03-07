@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.2.0
+## [v0.2.0] - 2025-03-07
 **Added:**
 - Authenticate, Navigation, and Register components
 - Ideas for future work
@@ -14,7 +14,7 @@
 
 ---
 
-## v0.1.0
+## [v0.1.0] - 2025-02-20
 **Added:**
 - Set up project structure with React
 - Created initial Home page
