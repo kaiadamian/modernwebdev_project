@@ -1,6 +1,7 @@
 import Parse from "parse"
 import { useNavigate } from "react-router-dom"
 import { logoutUser } from "./AuthService"
+import './Auth.css'
 
 const AuthLogout = () => {
     const navigate = useNavigate();

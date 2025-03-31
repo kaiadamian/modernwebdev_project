@@ -1,4 +1,5 @@
 import Parse from "parse"
+import './Auth.css'
 
 // used in auth register component
 export const createUser = (newUser) => {

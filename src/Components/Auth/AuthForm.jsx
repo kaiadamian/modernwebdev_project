@@ -1,3 +1,4 @@
+import './Auth.css'
 const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
 
   return (
@@ -28,6 +29,7 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
             value={user.lastName}
             onChange={onChange}
             name="lastName"
+            placeholder="last name"
             required
           />
         </div>{" "}

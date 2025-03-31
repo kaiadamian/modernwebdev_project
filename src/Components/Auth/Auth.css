@@ -33,4 +33,14 @@ input[type=text], input[type=number], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
 }
+
+p { 
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .form-group { 
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+  }
