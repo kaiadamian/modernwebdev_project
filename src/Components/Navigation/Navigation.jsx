@@ -2,24 +2,22 @@ import { Link } from 'react-router-dom'
 import './Navigation.css'
 
 const Navigation = () => (
-  <navigation>
     <nav>
-    <div class="navigation">
-      <div class="logo"></div>
+    <div className="navigation">
+      <div className="logo"></div>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li>
             <Link to="/courses">Courses</Link>
           </li>
           <li>
-            <Link to="/authenticate">Sign In</Link>
+            <Link to="/auth">Sign In</Link>
           </li>
         </ul>
       </div>
     </nav>
-  </navigation>
 )
 
 export default Navigation
