@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { checkUser, createUser } from "./AuthService"
 import AuthForm from "./AuthForm"
 import { useNavigate } from "react-router-dom"
+import './Auth.css'
 
 const AuthRegister = () => {
   const navigate = useNavigate()
