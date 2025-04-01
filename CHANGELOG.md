@@ -3,10 +3,12 @@
 ## [v0.3.0] - 2025-04-01
 **Added:**
   - Login module for authenticated user
-  - Default to Registration page 
+  - Default to Registration page
+
 **Changed:**
   - Navigation to be reliant on Protected Route components
-  - Signing up gives a user authenticated access 
+  - Signing up gives a user authenticated access
+
 **Fixed:**
   - Improved UI/UX with CSS on individual pages
 
