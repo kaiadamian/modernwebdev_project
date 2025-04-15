@@ -1,10 +1,7 @@
-/* imported google fonts */
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500");
 @import url("https://fonts.googleapis.com/css?family=Lexend:800");
 
-/* navigation design */
 .navigation {
-  /* flexbox styles */
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -15,7 +12,7 @@
 }
 
 .logo {
-  width: 333px;
+  width: 50px;
   height: 50px;
   background-image: url("../../Images/heights_logo.png");
   background-size: contain;
@@ -23,32 +20,35 @@
   background-position: center;
 }
 
-.navigation a {
+.navigation-link {
   text-decoration: none;
-  display: block;
   padding: 1em;
-  color: #ffde59;
-
+  color: #ffde59 !important;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
   font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-.navigation a:hover {
-  color: #fbefbf;
+.navigation-link:hover {
+  color: #fbefbf !important;
 }
 
-.navigation li {
-  display: inline-block;
+.nav-links-container {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-/* responsive design: media queries */
 @media all and (max-width: 800px) {
   .navigation {
     flex-flow: column wrap;
     padding: 0;
   }
-  .navigation a {
+  .navigation-link {
     text-align: center;
     padding: 10px 40px 10px 0;
   }
@@ -59,18 +59,16 @@
     flex-flow: column wrap;
     padding: 0;
   }
+
   .logo {
-    width: 50px;
-    height: 50px;
-    background-position: center;
+    width: 40px;
+    height: 40px;
     background-image: url("../../Images/heights_logo2.png");
     background-size: cover;
   }
-  .navigation a {
+
+  .navigation-link {
     text-align: center;
     padding: 10px 35px 10px 0;
-  }
-  .navigation li {
-    display: block;
   }
 }

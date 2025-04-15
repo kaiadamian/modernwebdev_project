@@ -17,7 +17,7 @@ function Components() {
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/home" element={<ProtectedRoute path="/home" element={Home} />} />
             <Route path="/courses" element={<ProtectedRoute path="/courses" element={Courses} />} />
-            <Route path="*" element={<Navigate to="/auth/login" replace />} />
+            <Route path="*" element={<Navigate to="/auth/login" replace />} /> 
           </Routes>
         </Router>
       )
