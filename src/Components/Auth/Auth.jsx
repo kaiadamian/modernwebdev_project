@@ -31,3 +31,5 @@ const AuthModule = () => {
 };
 
 export default AuthModule;
+
+/* in the future, we might include a picture on this page */

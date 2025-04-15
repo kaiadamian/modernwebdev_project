@@ -11,3 +11,5 @@ function Courses() {
 }
 
 export default Courses
+
+/* in the future, this page will have more features and ways for the user to interact */

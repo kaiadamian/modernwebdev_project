@@ -28,7 +28,6 @@ const AuthRegister = () => {
 
   // useEffect that run when changes are made to the state variable flags
   useEffect(() => {
-    // checkUser() ? history.push("/home"): null
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
