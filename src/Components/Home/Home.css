@@ -1,8 +1,8 @@
 /* home image design */
 .mats {
     width: 100%;
-    height: 500px;
+    height: 100vh;
     background-position: center;
-    background-image: url("../../Images/mats.jpg");
+    background-image: url("../../Images/dormlogo.png");
     background-size: cover;
   }
