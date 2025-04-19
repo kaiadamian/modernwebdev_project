@@ -1,6 +1,6 @@
 import { TextField, Button, Box, Typography, Paper } from "@mui/material";
 
-const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
+const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
   return (
     <Box
       display="flex"
@@ -15,6 +15,14 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
         </Typography>
 
         <form onSubmit={onSubmit} autoComplete="off">
+          {/* Autofill suppression honeypot */}
+          <input
+            type="text"
+            name="fake-field"
+            autoComplete="username"
+            style={{ display: "none" }}
+          />
+
           {!isLogin && (
             <>
               <TextField
@@ -25,6 +33,7 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
                 fullWidth
                 margin="normal"
                 required
+                autoComplete="off"
               />
               <TextField
                 label="Last Name"
@@ -34,6 +43,7 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
                 fullWidth
                 margin="normal"
                 required
+                autoComplete="off"
               />
             </>
           )}
@@ -47,7 +57,12 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
             fullWidth
             margin="normal"
             required
+            autoComplete="off"
+            inputProps={{ autoComplete: "new-password" }}
+            error={emailError}
+            helperText={emailError ? "Email must end with @nd.edu" : ""}
           />
+
           <TextField
             label="Password"
             name="password"
@@ -57,22 +72,24 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
             fullWidth
             margin="normal"
             required
+            autoComplete="off"
+            inputProps={{ autoComplete: "new-password" }}
           />
 
           <Box mt={2}>
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            sx={{
-              backgroundColor: "green",
-              "&:hover": {
-                backgroundColor: "darkgreen"
-              }
-            }}
-          >
-            Submit
-          </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{
+                backgroundColor: "green",
+                "&:hover": {
+                  backgroundColor: "darkgreen"
+                }
+              }}
+            >
+              Submit
+            </Button>
           </Box>
         </form>
       </Paper>

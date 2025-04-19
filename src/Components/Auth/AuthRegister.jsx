@@ -16,6 +16,7 @@ const AuthRegister = () => {
   });
 
   const [add, setAdd] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
     if (checkUser()) {
@@ -25,7 +26,7 @@ const AuthRegister = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (newUser && add) {
+    if (newUser && add && !emailError) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
           alert(`${userCreated.get("firstName")}, you successfully registered!`);
@@ -34,20 +35,27 @@ const AuthRegister = () => {
         setAdd(false);
       });
     }
-  }, [navigate, newUser, add]);
+  }, [navigate, newUser, add, emailError]);
 
   const onChangeHandler = (e) => {
-    e.preventDefault();
-    const { name, value: newValue } = e.target;
+    const { name, value } = e.target;
 
-    setNewUser({
-      ...newUser,
-      [name]: newValue
-    });
+    if (name === "email") {
+      setEmailError(!value.endsWith("@nd.edu"));
+    }
+
+    setNewUser((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (!newUser.email.endsWith("@nd.edu")) {
+      setEmailError(true);
+      return;
+    }
     setAdd(true);
   };
 
@@ -55,8 +63,10 @@ const AuthRegister = () => {
     <Box>
       <AuthForm
         user={newUser}
+        isLogin={false}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}
+        emailError={emailError}
       />
 
       <Typography align="center" mt={2}>

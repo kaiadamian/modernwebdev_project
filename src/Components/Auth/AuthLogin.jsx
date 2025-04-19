@@ -14,6 +14,7 @@ const AuthLogin = () => {
   });
 
   const [add, setAdd] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
     if (checkUser()) {
@@ -23,7 +24,7 @@ const AuthLogin = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (currentUser && add) {
+    if (currentUser && add && !emailError) {
       loginUser(currentUser).then((userLoggedIn) => {
         if (userLoggedIn) {
           alert(`${userLoggedIn.get("firstName")}, you successfully logged in!`);
@@ -32,20 +33,27 @@ const AuthLogin = () => {
         setAdd(false);
       });
     }
-  }, [navigate, currentUser, add]);
+  }, [navigate, currentUser, add, emailError]);
 
   const onChangeHandler = (e) => {
-    e.preventDefault();
-    const { name, value: newValue } = e.target;
+    const { name, value } = e.target;
 
-    setCurrentUser({
-      ...currentUser,
-      [name]: newValue
-    });
+    if (name === "email") {
+      setEmailError(!value.endsWith("@nd.edu"));
+    }
+
+    setCurrentUser((prev) => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (!currentUser.email.endsWith("@nd.edu")) {
+      setEmailError(true);
+      return;
+    }
     setAdd(true);
   };
 
@@ -56,6 +64,7 @@ const AuthLogin = () => {
         isLogin={true}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}
+        emailError={emailError}
       />
 
       <Typography align="center" mt={2}>
