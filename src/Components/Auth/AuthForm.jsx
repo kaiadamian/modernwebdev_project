@@ -1,74 +1,82 @@
-import './Auth.css'
-const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
+import { TextField, Button, Box, Typography, Paper } from "@mui/material";
 
+const AuthForm = ({ user, isLogin, onChange, onSubmit }) => {
   return (
-    <form onSubmit={onSubmit} autoComplete="off">
-    {!isLogin ? 
-    <div>
-        <div className="form-group">
-          <label>First Name</label>
-          <br />
-          <input
-            type="text"
-            className="form-control"
-            id="first-name-input"
-            value={user.firstName}
-            onChange={onChange}
-            name="firstName"
-            placeholder="first name"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Last Name</label>
-          <br />
-          <input
-            type="text"
-            className="form-control"
-            id="last-name-input"
-            value={user.lastName}
-            onChange={onChange}
-            name="lastName"
-            placeholder="last name"
-            required
-          />
-        </div>{" "}
-        </div> : <></>}
-        <div>
-        <div className="form-group">
-          <label>Email</label>
-          <br />
-          <input
-            type="email"
-            className="form-control"
-            id="email-input"
-            value={user.email}
-            onChange={onChange}
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#f5f5f5"
+    >
+      <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
+        <Typography variant="h5" align="center" gutterBottom>
+          {isLogin ? "Login" : "Register"}
+        </Typography>
+
+        <form onSubmit={onSubmit} autoComplete="off">
+          {!isLogin && (
+            <>
+              <TextField
+                label="First Name"
+                name="firstName"
+                value={user.firstName || ""}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+              <TextField
+                label="Last Name"
+                name="lastName"
+                value={user.lastName || ""}
+                onChange={onChange}
+                fullWidth
+                margin="normal"
+                required
+              />
+            </>
+          )}
+
+          <TextField
+            label="Email"
             name="email"
-            required
-          />
-        </div>{" "}
-        <div className="form-group">
-          <label>Password</label>
-          <br />
-          <input
-            type="password"
-            className="form-control"
-            id="password-input"
-            value={user.password}
+            type="email"
+            value={user.email || ""}
             onChange={onChange}
-            name="password"
-            min="0"
+            fullWidth
+            margin="normal"
             required
           />
-        </div>
-        <div className="form-group">
-          <button type="submit" className="btn btn-primary" onSubmit={onSubmit}>
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            value={user.password || ""}
+            onChange={onChange}
+            fullWidth
+            margin="normal"
+            required
+          />
+
+          <Box mt={2}>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{
+              backgroundColor: "green",
+              "&:hover": {
+                backgroundColor: "darkgreen"
+              }
+            }}
+          >
             Submit
-          </button>
-        </div>
-    </div>
-  </form>
+          </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

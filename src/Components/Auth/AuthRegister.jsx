@@ -1,74 +1,72 @@
-import { useEffect, useState } from "react"
-import { checkUser, createUser } from "./AuthService"
-import AuthForm from "./AuthForm"
-import { useNavigate } from "react-router-dom"
-import './Auth.css'
+import { useEffect, useState } from "react";
+import { checkUser, createUser } from "./AuthService";
+import AuthForm from "./AuthForm";
+import { useNavigate } from "react-router-dom";
+import { Typography, Link as MUILink, Box } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 const AuthRegister = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: ""
-  })
+  });
 
-  // flags in the state to watch for add/remove updates
-  const [add, setAdd] = useState(false)
+  const [add, setAdd] = useState(false);
 
-  // redirect already authenticated users back to home
   useEffect(() => {
     if (checkUser()) {
-      alert("You are already logged in")
-      // redirect user to main app
-      navigate("/home")
+      alert("You are already logged in");
+      navigate("/home");
     }
-  }, [navigate])
+  }, [navigate]);
 
-  // useEffect that run when changes are made to the state variable flags
   useEffect(() => {
     if (newUser && add) {
       createUser(newUser).then((userCreated) => {
         if (userCreated) {
-          alert(
-            `${userCreated.get("firstName")}, you successfully registered!`
-          )
-          // redirect user to main app
-          navigate("/home")
+          alert(`${userCreated.get("firstName")}, you successfully registered!`);
+          navigate("/home");
         }
-        setAdd(false)
-      })
+        setAdd(false);
+      });
     }
-  }, [navigate, newUser, add])
+  }, [navigate, newUser, add]);
 
   const onChangeHandler = (e) => {
-    e.preventDefault()
-    console.log(e.target)
-    const { name, value: newValue } = e.target
-    console.log(newValue)
+    e.preventDefault();
+    const { name, value: newValue } = e.target;
 
     setNewUser({
       ...newUser,
       [name]: newValue
-    })
-  }
+    });
+  };
 
   const onSubmitHandler = (e) => {
-    e.preventDefault()
-    console.log("submitted: ", e.target)
-    setAdd(true)
-  }
+    e.preventDefault();
+    setAdd(true);
+  };
 
   return (
-    <div>
+    <Box>
       <AuthForm
         user={newUser}
         onChange={onChangeHandler}
         onSubmit={onSubmitHandler}
       />
-    </div>
-  )
-}
 
-export default AuthRegister
+      <Typography align="center" mt={2}>
+        Already have an account?{" "}
+        <MUILink component={RouterLink} to="/auth/login">
+          Log in here
+        </MUILink>
+      </Typography>
+    </Box>
+  );
+};
+
+export default AuthRegister;
