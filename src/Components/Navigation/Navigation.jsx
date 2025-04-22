@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 import './Navigation.css'
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['About', 'Explore', 'Contact'];
 const settings = ['Account', 'Home', 'Logout'];
 
 function NavBar() {
@@ -38,9 +38,9 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="fixed" className="navigation">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+    <AppBar position="static" className="navigation" sx={{ marginBottom: 0 }}>
+      <Container maxWidth="xl" sx={{ padding: 0 }}>
+        <Toolbar disableGutters sx={{ minHeight: '64px !important', padding: 0 }}>
           <div className='logo'></div>
           <Typography
             variant="h6"

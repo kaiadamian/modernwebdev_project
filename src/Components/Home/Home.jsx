@@ -6,8 +6,6 @@ import ChatBox from '../Chat/ChatBox';
 function Home() {
     return (
       <section>
-        <br />
-        <ChatBox />
         <CurrentEvents />
         <AuthLogout />   
       </section>
