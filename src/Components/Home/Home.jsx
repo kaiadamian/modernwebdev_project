@@ -1,12 +1,14 @@
 import AuthLogout from '../Auth/AuthLogout.jsx'
 import './Home.css'
+import ChatBox from '../Chat/ChatBox';
 
 function Home() {
     return (
       <section>
         <div className="mats"></div>   
         <br />
-        <AuthLogout />   
+        <ChatBox />
+        <AuthLogout /> 
       </section>
     )
 }
