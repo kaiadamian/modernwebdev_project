@@ -1,30 +1,39 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:500");
-@import url("https://fonts.googleapis.com/css?family=Lexend:800");
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 
 .navigation {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   margin: 0;
-  background: #545454;
+  background-color: #ffffff !important;
   align-items: center;
   padding: 10px 2%;
+  font-family: monospace;
 }
 
 .logo {
   width: 50px;
   height: 50px;
-  background-image: url("../../Images/heights_logo.png");
+  background-image: url("/Images/nd_logo.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  margin-right: 20px !important;
+  margin-left: 0px;
 }
+
+@media (max-width: 600px) {
+    .logo {
+      width: 35px;
+      height: 35px;
+    }
+  }
 
 .navigation-link {
   text-decoration: none;
   padding: 1em;
   color: #ffde59 !important;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Lora", serif;
   font-weight: 500;
   font-size: 16px;
   background: none;

@@ -13,10 +13,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import './Navigation.css'; // your CSS file
+import './Navigation.css'
 
-const pages = ['Home', 'Courses', 'Sign In'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Account', 'Home', 'Logout'];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -38,34 +38,32 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className="navigation">
       <Container maxWidth="xl">
-        <Toolbar disableGutters className="navigation">
-          {/* Logo (desktop) */}
-          <div className="logo"></div>
+        <Toolbar disableGutters>
+          <div className='logo'></div>
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Lexend, sans-serif',
-              fontWeight: 800,
-              letterSpacing: '.2rem',
-              color: '#ffde59',
+              fontFamily: 'Lora, monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: '#c99927',
               textDecoration: 'none',
             }}
           >
-            HEIGHTS ACADEMY GUAM
+            UNIVERSITY OF NOTRE DAME
           </Typography>
 
-          {/* Mobile menu icon */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="menu"
+              aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -87,46 +85,54 @@ function NavBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-
-          {/* Links (desktop view) */}
-          <Box
-            className="nav-links-container"
-            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
           >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                component="a"
-                href={`#${page.toLowerCase().replace(/\s+/g, '')}`}
-                className="navigation-link"
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-
-          {/* Optional user menu */}
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
-              id="menu-user"
+              id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
@@ -142,7 +148,7 @@ function NavBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -152,5 +158,5 @@ function NavBar() {
     </AppBar>
   );
 }
-
 export default NavBar;
+
