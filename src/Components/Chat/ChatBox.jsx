@@ -1,3 +1,5 @@
+// this chat feature was implemented via **POLLING** instead of livequery so that no credit card info had to be entered 
+
 import React, { useEffect, useState, useRef } from 'react';
 import Parse from '../../parseConfig';
 import {
@@ -47,6 +49,7 @@ const ChatBox = () => {
   
     const results = await combinedQuery.find();
   
+   // play audio 
     if (
       results.length > previousMessageCount.current &&
       hasInteracted &&
@@ -55,7 +58,6 @@ const ChatBox = () => {
       audioRef.current.play().catch(() => {});
     }
     
-  
     previousMessageCount.current = results.length;
     setMessages(results);
   };
@@ -92,14 +94,16 @@ const ChatBox = () => {
   }, []);
   
 
+  
   const sendMessage = async () => {
+    // failsafe -- should never be used
     if (!Parse.User.current()) {
       alert("You must be logged in to send messages.");
       return;
     }
     if (!newMessage.trim()) return;
   
-    // Fetch the admin user by username (only once, could be cached)
+    // fetch the admin user by username 
     const userQuery = new Parse.Query(Parse.User);
     userQuery.equalTo('username', 'admin@nd.edu');
     const adminUser = await userQuery.first();
@@ -114,7 +118,8 @@ const ChatBox = () => {
     fetchMessages();
   };
   
-
+// stylistic choices implemented here 
+  // blue & gray bubbles 
   return (
     <Box sx={{ maxWidth: 500, margin: 'auto', mt: 4 }}>
       {resumed && (
