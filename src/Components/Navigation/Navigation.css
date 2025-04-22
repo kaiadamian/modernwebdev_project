@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
 
 .navigation {
   display: flex;
@@ -33,7 +34,7 @@
   text-decoration: none;
   padding: 1em;
   color: #ffde59 !important;
-  font-family: "Lora", serif;
+  font-family: "Special Gothic Expanded One", serif;
   font-weight: 500;
   font-size: 16px;
   background: none;
@@ -81,3 +82,4 @@
     padding: 10px 35px 10px 0;
   }
 }
+

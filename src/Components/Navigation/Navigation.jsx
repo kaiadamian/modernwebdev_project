@@ -38,7 +38,7 @@ function NavBar() {
   };
 
   return (
-    <AppBar position="static" className="navigation">
+    <AppBar position="fixed" className="navigation">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div className='logo'></div>
@@ -50,8 +50,8 @@ function NavBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Lora, monospace',
-              fontWeight: 700,
+              fontFamily: 'Special Gothic Expanded One, monospace',
+              fontWeight: 600,
               letterSpacing: '.3rem',
               color: '#c99927',
               textDecoration: 'none',
@@ -107,7 +107,7 @@ function NavBar() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#000000',
               textDecoration: 'none',
             }}
           >
@@ -118,7 +118,7 @@ function NavBar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'black', display: 'block' }}
               >
                 {page}
               </Button>
