@@ -7,7 +7,7 @@ const Contact = () => {
     <Container sx={{ marginTop: 4 }}>
         <Typography variant="h1" color="primary.main">
             Contact Us
-            </Typography>
+        </Typography>
         <ChatBox />
     </Container>
   );
