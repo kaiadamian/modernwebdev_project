@@ -15,8 +15,15 @@ import logo from '../../assets/nd_logo.png'
 import { useNavigate } from 'react-router-dom'
 import { logoutUser } from "../Auth/AuthService"
 
+<<<<<<< HEAD
+import './Navigation.css'
+
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Account', 'Home', 'Logout'];
+=======
 const pages = ['Home', 'Explore', 'Contact']
 const settings = ['Logout']
+>>>>>>> a65c6f2b51ec4c6ddb996bfc396462f8d584cd84
 
 function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -38,6 +45,131 @@ function NavBar() {
     }
     const navigate = useNavigate()
 
+<<<<<<< HEAD
+  return (
+    <AppBar position="fixed" className="navigation">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <div className='logo'></div>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'Special Gothic Expanded One, monospace',
+              fontWeight: 600,
+              letterSpacing: '.3rem',
+              color: '#c99927',
+              textDecoration: 'none',
+            }}
+          >
+            UNIVERSITY OF NOTRE DAME
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: '#000000',
+              textDecoration: 'none',
+            }}
+          >
+            
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'black', display: 'block' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+}
+export default NavBar;
+
+=======
     const handleLogout = () => {
         logoutUser()  // Call the logoutUser function directly
         .then(() => {
@@ -206,3 +338,4 @@ function NavBar() {
   )
 }
 export default NavBar
+>>>>>>> a65c6f2b51ec4c6ddb996bfc396462f8d584cd84

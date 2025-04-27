@@ -8,7 +8,12 @@
   margin: 0;
   background-color: #ffffff !important;
   align-items: center;
+<<<<<<< HEAD
+  padding: 10px 2%;
+  font-family: monospace;
+=======
   padding: 10px;
+>>>>>>> a65c6f2b51ec4c6ddb996bfc396462f8d584cd84
 }
 
 .logo {
