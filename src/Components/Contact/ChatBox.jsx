@@ -118,8 +118,6 @@ const ChatBox = () => {
     fetchMessages();
   };
   
-// stylistic choices implemented here 
-  // blue & gray bubbles 
   return (
     <Box sx={{ maxWidth: 500, margin: 'auto', mt: 4 }}>
       {resumed && (
@@ -129,7 +127,7 @@ const ChatBox = () => {
           </Typography>
         </Paper>
       )}
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" color="primary.main" gutterBottom>
         Chat with Admin
       </Typography>
       <Paper elevation={3} sx={{ height: 300, overflowY: 'auto', mb: 2, p: 2 }}>

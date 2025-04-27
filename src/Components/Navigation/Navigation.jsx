@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import logo from '../../assets/nd_logo.png'
 import { useNavigate } from 'react-router-dom'
-import { logoutUser } from "../Auth/AuthService"
+import { getUser, logoutUser } from "../Auth/AuthService"
 
 const pages = ['Home', 'Explore', 'Contact']
 const settings = ['Logout']
@@ -78,7 +78,7 @@ function NavBar() {
                     mr: 2,
                     display: { xs: 'none', md: 'flex' },
                     letterSpacing: '.3rem',
-                    color: 'info.main',
+                    color: 'secondary.main',
                     fontWeight: 700,
                     textDecoration: 'none',
                     }}
@@ -95,7 +95,7 @@ function NavBar() {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
-                    sx={{ color: 'info.dark' }}
+                    sx={{ color: 'secondary.main' }}
                     >
                     <MenuIcon />
                     </IconButton>
@@ -163,7 +163,7 @@ function NavBar() {
                             handleCloseNavMenu()
                             navigate(`/${page.toLowerCase()}`) // navigate to /home, /explore, /contact
                         }}
-                        sx={{ my: 2, color: 'info.dark', display: 'block' }}
+                        sx={{ my: 2, color: 'secondary.main', display: 'block' }}
                     >
                         {page}
                     </Button>
@@ -174,7 +174,9 @@ function NavBar() {
                 <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                        {getUser() ? getUser().get('firstName')?.charAt(0).toUpperCase() : '?'}
+                    </Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu

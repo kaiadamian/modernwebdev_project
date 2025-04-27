@@ -57,7 +57,7 @@ const NewEvents = () => {
                     sx={{ 
                         cursor: 'pointer', 
                         textDecoration: 'none', 
-                        color: 'primary.main',
+                        color: 'info.dark',
                         '&:hover': { textDecoration: 'underline' } 
                     }}
                 >
@@ -65,7 +65,7 @@ const NewEvents = () => {
                 </Typography>
               )}
               {/* Display event name */}
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h5" color="info.dark" gutterBottom>
                 {event.get('eventName')}
               </Typography>
               {/* Display event date */}

@@ -81,9 +81,9 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
               variant="contained"
               fullWidth
               sx={{
-                backgroundColor: "green",
+                backgroundColor: "primary.main",
                 "&:hover": {
-                  backgroundColor: "darkgreen"
+                  backgroundColor: "primary.dark"
                 }
               }}
             >
