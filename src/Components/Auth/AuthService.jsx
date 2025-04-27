@@ -57,3 +57,8 @@ export const logoutUser = () => {
       console.error("Error logging out:", error);
     });
 };
+
+// get the current user
+export const getUser = () => {
+    return Parse.User.current(); 
+};

@@ -7,9 +7,9 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 const theme = createTheme({
     palette: {
         primary: {
-            light: "#598456",
-            main: "#3B5839",
-            dark: "#1D2C1C"
+            light: "#a6b8a5",
+            main: "#536953",
+            dark: "#304030"
         },
         secondary: {
             light: "#365c8f",
@@ -24,16 +24,25 @@ const theme = createTheme({
     },
     typography: {
         h1: {
-            fontSize: "3rem",
-            fontWeight: "800"
+            fontSize: "2.125rem",
+            fontWeight: "bold",
+            '@media (max-width:600px)': {
+                fontSize: "1.75rem",
+            }
         },
         h2: {
             fontSize: "1.75rem",
-            fontWeight: "600"
+            fontWeight: "bold",
+            '@media (max-width:600px)': {
+                fontSize: "1.5rem",
+            }
         },
         h3: {
             fontSize: "1.5rem",
-            fontWeight: "600"
+            fontWeight: "bold",
+            '@media (max-width:600px)': {
+                fontSize: "1.25rem",
+            }
         },
         body1: {
             fontSize: "1rem",
@@ -50,14 +59,6 @@ const theme = createTheme({
                 }
             }
         }
-        // MuiPaper: {
-        //     styleOverrides: {
-        //         root: {
-        //             padding: "14px",
-        //             borderRadius: "12px",
-        //         }
-        //     }
-        // }
     }
 })
 

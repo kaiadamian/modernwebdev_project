@@ -4,7 +4,6 @@ import { Container } from '@mui/material'
 function Explore() {
     return (
         <Container sx={{ marginTop: 4 }}>
-            <h1>Explore</h1>
             <ExploreDropdown /> 
         </Container>
       )
