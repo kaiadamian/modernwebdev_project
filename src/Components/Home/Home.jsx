@@ -1,14 +1,12 @@
-import './Home.css'
 import Box from '@mui/material/Box';
+import NewEvents from './NewEvents.jsx'
 
 function Home() {
     return (
       <section> 
+        <NewEvents/>
       </section>
     )
 }
 
 export default Home
-// // in the future, this page would include more information about the classes 
-// // perhaps some videos
-

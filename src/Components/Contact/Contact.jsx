@@ -1,12 +1,15 @@
 import React from 'react'
 import ChatBox from './ChatBox.jsx'
+import { Container, Typography } from '@mui/material'
 
 const Contact = () => {
   return (
-    <div>
-      <h1>Contact Us</h1>
-      <ChatBox />
-    </div>
+    <Container sx={{ marginTop: 4 }}>
+        <Typography variant="h1" color="primary.main">
+            Contact Us
+            </Typography>
+        <ChatBox />
+    </Container>
   );
 };
 

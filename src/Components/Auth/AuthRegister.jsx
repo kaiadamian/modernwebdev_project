@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { checkUser, createUser } from "./AuthService";
 import AuthForm from "./AuthForm";
 import { useNavigate } from "react-router-dom";
-import { Typography, Link as MUILink, Box } from "@mui/material";
+import { Typography, Link as MUILink, Box, Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 const AuthRegister = () => {
@@ -12,7 +12,8 @@ const AuthRegister = () => {
     firstName: "",
     lastName: "",
     email: "",
-    password: ""
+    password: "",
+    avatar: null
   });
 
   const [add, setAdd] = useState(false);
