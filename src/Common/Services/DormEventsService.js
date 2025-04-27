@@ -1,3 +1,4 @@
+/* get all of a dorm's events */
 import Parse from 'parse';
 
 export const getEventsByDormId = (dormId) => {

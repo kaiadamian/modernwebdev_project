@@ -1,26 +1,17 @@
-<<<<<<< HEAD
-import AuthLogout from '../Auth/AuthLogout.jsx'
-import CurrentEvents from './CurrentEvents.jsx'
-import './Home.css'
-import ChatBox from '../Chat/ChatBox';
-
-function Home() {
-    return (
-      <section>
-        <br />
-        <ChatBox />
-        <CurrentEvents />
-        <AuthLogout />   
-=======
-import Box from '@mui/material/Box';
 import NewEvents from './NewEvents.jsx'
+import { Box, Container, Typography } from '@mui/material'
 
 function Home() {
     return (
-      <section> 
-        <NewEvents/>
->>>>>>> a65c6f2b51ec4c6ddb996bfc396462f8d584cd84
-      </section>
+        <Container sx={{ marginTop: 4 }}>
+            <Typography variant="h1" color="primary.main">
+                Dorm Life
+            </Typography>
+            <Typography variant="body1" color="primary.main">
+                Dorm Life
+            </Typography>
+            <NewEvents/>
+        </Container>
     )
 }
 

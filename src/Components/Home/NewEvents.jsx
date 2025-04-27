@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { Paper, Typography, Grid, Box } from '@mui/material';
-import { getNewEvents } from '../../Common/Services/NewEventsService.js'; // Make sure to adjust the path to your service
+import React, { useEffect, useState } from 'react'
+import { Paper, Typography, Grid, Box, Grow } from '@mui/material'
+import { getNewEvents } from '../../Common/Services/NewEventsService.js'
+import { useNavigate } from 'react-router-dom'
 
 const NewEvents = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([])
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    // Fetch events on component mount
-    getNewEvents()
+    getNewEvents() // fetch events
       .then(fetchedEvents => {
-        setEvents(fetchedEvents);
-        setLoading(false);
+        setEvents(fetchedEvents)
+        setLoading(false)
       })
       .catch(error => {
-        console.error('Error fetching events:', error);
-        setLoading(false);
-      });
-  }, []);
+        console.error('Error fetching events:', error)
+        setLoading(false)
+      })
+  }, [])
 
   if (loading) {
-    return <Typography variant="h6">Loading events...</Typography>;
+    return <Typography variant="h6">Loading events...</Typography>
   }
 
   return (
@@ -28,8 +29,6 @@ const NewEvents = () => {
         container 
         spacing={3}
         sx={{
-            paddingLeft: 2,  
-            paddingRight: 2, 
             paddingTop: 2,   
           }}
     >
@@ -38,6 +37,7 @@ const NewEvents = () => {
       ) : (
         events.map((event, index) => (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+            <Grow in={true} timeout={500 * (index + 1)}>
             <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
               {/* Display event image */}
               {event.get('eventImage') && (
@@ -50,7 +50,17 @@ const NewEvents = () => {
               )}
               {/* Display dorm name */}
               {event.dormName && (
-                <Typography variant="body2" gutterBottom>
+                <Typography 
+                    variant="body2" 
+                    gutterBottom
+                    onClick={() => navigate(`/explore?dormName=${encodeURIComponent(event.dormName)}`)}
+                    sx={{ 
+                        cursor: 'pointer', 
+                        textDecoration: 'none', 
+                        color: 'primary.main',
+                        '&:hover': { textDecoration: 'underline' } 
+                    }}
+                >
                     {event.dormName} Hall
                 </Typography>
               )}
@@ -71,11 +81,12 @@ const NewEvents = () => {
               {/* Display event description */}
               <Typography variant="body1">{event.get('eventDescription')}</Typography>
             </Paper>
+            </Grow>
           </Grid>
         ))
       )}
     </Grid>
-  );
-};
+  )
+}
 
-export default NewEvents;
+export default NewEvents

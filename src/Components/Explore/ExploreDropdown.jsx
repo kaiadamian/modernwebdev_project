@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getAllDorms } from '../../Common/Services/ExploreService.js'
 import { getEventsByDormId } from '../../Common/Services/DormEventsService.js'
+import { findDormByName } from '../../Common/Services/FindDormByNameService.js'
 import { Autocomplete, TextField, Grow, Card, Container, CardMedia, CardContent, Typography, Grid } from '@mui/material'
 
 /* retrieves all dorms and displays them */
@@ -9,11 +10,26 @@ const ExploreDropdown = () => {
     const [selectedDorm, setSelectedDorm] = useState(null) 
     const [events, setEvents] = useState([])
 
+    const dormNameFromURL = new URLSearchParams(location.search).get('dormName')
+
     useEffect(() => {
         getAllDorms()
-        .then(setDorms)
+        .then(fetchedDorms => {
+            setDorms(fetchedDorms)
+    
+            if (dormNameFromURL) {
+                const matchedDorm = findDormByName(fetchedDorms, dormNameFromURL)
+                if (matchedDorm) {
+                    setSelectedDorm(matchedDorm)
+    
+                    getEventsByDormId(matchedDorm.id)
+                        .then(setEvents)
+                        .catch((error) => console.error('Error fetching events:', error))
+                }
+            }
+        })
         .catch((error) => console.error('Error fetching dorms:', error))
-    }, [])
+    }, [dormNameFromURL])
 
     const handleDormSelection = (event, newValue) => {
         setSelectedDorm(newValue)
@@ -42,6 +58,9 @@ const ExploreDropdown = () => {
           />
       
           {/* Show events */}
+          <Typography variant="h1" color="primary.main" sx={{ marginTop: 4 }}>
+                {selectedDorm?.get('dormName')} Hall
+        </Typography>
           <Grid container spacing={2} sx={{ marginTop: 4 }}>
             {events.map((event, index) => (
               <Grow in={true} timeout={(index + 1) * 300} key={event.id}>
