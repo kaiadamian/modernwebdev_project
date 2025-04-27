@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import AuthLogout from '../Auth/AuthLogout.jsx'
 import CurrentEvents from './CurrentEvents.jsx'
 import './Home.css'
@@ -10,11 +11,17 @@ function Home() {
         <ChatBox />
         <CurrentEvents />
         <AuthLogout />   
+=======
+import Box from '@mui/material/Box';
+import NewEvents from './NewEvents.jsx'
+
+function Home() {
+    return (
+      <section> 
+        <NewEvents/>
+>>>>>>> a65c6f2b51ec4c6ddb996bfc396462f8d584cd84
       </section>
     )
 }
 
 export default Home
-// // in the future, this page would include more information about the classes 
-// // perhaps some videos
-

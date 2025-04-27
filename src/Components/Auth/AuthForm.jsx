@@ -7,7 +7,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      bgcolor="#f5f5f5"
     >
       <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
         <Typography variant="h5" align="center" gutterBottom>
