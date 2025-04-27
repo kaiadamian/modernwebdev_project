@@ -1,12 +1,13 @@
 import ExploreDropdown from './ExploreDropdown.jsx'
+import { Container } from '@mui/material'
 
 function Explore() {
-  return (
-    <section>
-      <h1>Explore</h1>
-      <ExploreDropdown />
-    </section>    
-  )
+    return (
+        <Container sx={{ marginTop: 4 }}>
+            <h1>Explore</h1>
+            <ExploreDropdown /> 
+        </Container>
+      )
 }
 
 export default Explore

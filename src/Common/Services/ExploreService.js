@@ -3,7 +3,7 @@ import Parse from 'parse'
 
 /* READ operation - get all dorms */
 export const getAllDorms = () => {
-    const Dorm = Parse.Object.extend('Course');
+    const Dorm = Parse.Object.extend('Dorm');
     const query = new Parse.Query(Dorm);
 
     return query.find()
