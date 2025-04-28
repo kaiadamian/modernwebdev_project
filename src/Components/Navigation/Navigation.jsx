@@ -15,8 +15,6 @@ import logo from '../../assets/nd_logo.png'
 import { useNavigate } from 'react-router-dom'
 import { getUser, logoutUser } from "../Auth/AuthService"
 
-
-import './Navigation.css'
 const pages = ['Home', 'Explore', 'Contact', 'Manage']
 const settings = ['Logout']
 
