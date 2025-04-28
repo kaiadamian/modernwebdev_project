@@ -1,4 +1,5 @@
-import { TextField, Button, Box, Typography, Paper } from "@mui/material";
+/* Authentication form for reuse in AuthLogin, AuthRegister modules */
+import { TextField, Button, Box, Typography, Paper } from "@mui/material"
 
 const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
   return (
@@ -93,7 +94,7 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
         </form>
       </Paper>
     </Box>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm

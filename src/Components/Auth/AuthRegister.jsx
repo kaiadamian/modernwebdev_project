@@ -1,3 +1,4 @@
+/* Register Page */
 import { useEffect, useState } from "react";
 import { checkUser, createUser } from "./AuthService";
 import AuthForm from "./AuthForm";

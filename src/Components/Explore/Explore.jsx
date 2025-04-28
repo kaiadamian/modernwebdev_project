@@ -1,3 +1,5 @@
+/* Explore Page */
+
 import ExploreDropdown from './ExploreDropdown.jsx'
 import { Container } from '@mui/material'
 
@@ -10,5 +12,3 @@ function Explore() {
 }
 
 export default Explore
-
-/* in the future, this page will have more features and ways for the user to interact */
