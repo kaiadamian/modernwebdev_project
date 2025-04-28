@@ -38,7 +38,7 @@ export default function ManageEvents() {
         const dormResults = await dormQuery.find();
         setDorms(dormResults);
 
-        const Event = Parse.Object.extend("DormEvent");
+        const Event = Parse.Object.extend("Event");
         const eventQuery = new Parse.Query(Event);
         const eventResults = await eventQuery.find();
         setEvents(eventResults);
@@ -61,7 +61,7 @@ export default function ManageEvents() {
     }
 
     try {
-      const Event = new Parse.Object("DormEvent");
+      const Event = new Parse.Object("Event");
 
       Event.set("eventName", eventName);
       Event.set("eventDate", new Date(eventDate));
@@ -92,7 +92,7 @@ export default function ManageEvents() {
         setDormId("");
 
         // Refresh events list
-        const Event = Parse.Object.extend("DormEvent");
+        const Event = Parse.Object.extend("Event");
         const eventQuery = new Parse.Query(Event);
         const eventResults = await eventQuery.find();
         setEvents(eventResults);
@@ -118,7 +118,7 @@ export default function ManageEvents() {
     }
 
     try {
-      const Event = Parse.Object.extend("DormEvent");
+      const Event = Parse.Object.extend("Event");
       const query = new Parse.Query(Event);
       const eventToDeleteObject = await query.get(eventToDelete);
 
@@ -199,7 +199,7 @@ export default function ManageEvents() {
         >
           {dorms.map((dorm) => (
             <MenuItem key={dorm.id} value={dorm.id}>
-              {dorm.get("name") || dorm.id}
+              {dorm.get("dormName") || dorm.id}
             </MenuItem>
           ))}
         </Select>
