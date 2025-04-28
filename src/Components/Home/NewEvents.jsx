@@ -1,6 +1,7 @@
+/* New Events Page */
 import React, { useEffect, useState } from 'react'
 import { Paper, Typography, Grid, Box, Grow } from '@mui/material'
-import { getNewEvents } from '../../Common/Services/NewEventsService.js'
+import { getNewEvents } from '../../Common/Services/EventsService.js'
 import { useNavigate } from 'react-router-dom'
 
 const NewEvents = () => {

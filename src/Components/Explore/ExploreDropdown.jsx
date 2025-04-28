@@ -1,7 +1,7 @@
+/* Explore Page dropdown display */
 import { useEffect, useState } from 'react'
-import { getAllDorms } from '../../Common/Services/ExploreService.js'
-import { getEventsByDormId } from '../../Common/Services/DormEventsService.js'
-import { findDormByName } from '../../Common/Services/FindDormByNameService.js'
+import { getAllDorms } from '../../Common/Services/DormsService.js'
+import { getEventsByDormId } from '../../Common/Services/EventsService.js'
 import { Autocomplete, TextField, Grow, Card, Container, CardMedia, CardContent, Typography, Grid, Box, Paper } from '@mui/material'
 
 /* retrieves all dorms and displays them */
@@ -9,6 +9,11 @@ const ExploreDropdown = () => {
     const [dorms, setDorms] = useState([])
     const [selectedDorm, setSelectedDorm] = useState(null) 
     const [events, setEvents] = useState([])
+
+    const findDormByName = (dorms, dormName) => {
+        if (!dorms || !dormName) return null
+        return dorms.find(dorm => dorm.get('dormName') === dormName)
+    }
 
     const dormNameFromURL = new URLSearchParams(location.search).get('dormName')
 
@@ -68,32 +73,39 @@ const ExploreDropdown = () => {
                     <Paper sx={{ backgroundColor: '#ffffff', padding: 3 }}>
                         <Grid container spacing={3} alignItems="center">
                             {/* Left: Logo */}
-                            <Grid sx={{ xs: 12, md: 4}}>
-                            <Box
-                                component="img"
-                                src={selectedDorm.get('dormLogo')?.url()}
-                                alt={selectedDorm.get('dormName')}
-                                sx={{
-                                width: '100%',
-                                height: 'auto',
-                                maxWidth: 250,
-                                objectFit: 'cover',
-                                margin: '0 auto',
-                                display: 'block',
-                                }}
-                            />
+                            <Grid sx={{ xs: 12, md: 4, display: 'flex', justifyContent: 'center' }}>
+                                <Box
+                                    component="img"
+                                    src={selectedDorm.get('dormLogo')?.url()}
+                                    alt={selectedDorm.get('dormName')}
+                                    sx={{
+                                    width: '100%',
+                                    height: 'auto',
+                                    maxWidth: 250,
+                                    objectFit: 'cover',
+                                    }}
+                                />
                             </Grid>
 
                             {/* Right */}
-                            <Grid item xs={12} md={8}>
+                            <Grid sx={{ xs: 12, md: 8 }}>
                             <Typography variant="h1" color="primary.main" sx={{ marginBottom: 2 }}>
                                 {selectedDorm.get('dormName')} Hall
                             </Typography>
                             <Typography variant="body1" color="primary.main">
-                                Check out our events below!
+                                {selectedDorm.get('dormName')} Hall was founded in {selectedDorm.get('yearFounded')}. 
+                                Located on {selectedDorm.get('dormLocation')}, it is home to {selectedDorm.get('dormCapacity')} {selectedDorm.get('dormSex')}.
                             </Typography>
                             </Grid>
                         </Grid>
+                        </Paper>
+                        
+                        </Grow>
+                        <Grow in={true} timeout={500}>
+                        <Paper sx={{ backgroundColor: '#ffffff', padding: 2, marginTop: 2 }}>
+                            <Typography variant="h3" color="primary.main">
+                                Check out our events below!
+                            </Typography>
                         </Paper>
                         </Grow>
                 </Container>
@@ -108,7 +120,7 @@ const ExploreDropdown = () => {
             >
                 {events.map((event, index) => (
                 <Grow in={true} timeout={(index + 1) * 300} key={event.id}>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid sx={{ xs: 12, sm: 6, md: 4 }}>
                     <Card sx={{ width: 300, height: 300, display: 'flex', flexDirection: 'column' }}>
                         {event.eventImage && (
                         <CardMedia

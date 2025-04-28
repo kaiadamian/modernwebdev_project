@@ -1,6 +1,5 @@
 import Home from './Home/Home.jsx'
 import Explore from './Explore/Explore.jsx'
-import AuthModule from './Auth/Auth.jsx'
 import AuthRegister from "./Auth/AuthRegister"
 import AuthLogin from "./Auth/AuthLogin"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx"
@@ -13,7 +12,7 @@ function Components() {
         <Router>
           <Navigation />
           <Routes>
-            <Route path="/auth" element={<AuthModule />} />
+            <Route path="/auth" element={<AuthLogin />} />
             <Route path="/auth/register" element={<AuthRegister />} />
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/home" element={<ProtectedRoute path="/home" element={Home} />} />
