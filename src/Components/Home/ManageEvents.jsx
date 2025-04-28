@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkUser } from "./AuthService";
+import { checkUser } from "../Auth/AuthService";
 import Parse from "parse";
 
 export default function ManageEvents() {
@@ -11,10 +11,14 @@ export default function ManageEvents() {
   const [eventImage, setEventImage] = useState(null);
   const [dormId, setDormId] = useState("");
 
-  if (!checkUser()) {
-    navigate("/auth/login");
-    return null;
-  }
+ if (!checkUser()) {
+    return (
+        <div>
+            <h2>Access Denied</h2>
+            <p>You must be logged in to view this page.</p>
+        </div>
+    );
+}
 
   const handleAddEvent = async () => {
     if (!eventName.trim() || !eventDate) {

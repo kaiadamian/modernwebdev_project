@@ -17,7 +17,7 @@ import { getUser, logoutUser } from "../Auth/AuthService"
 
 
 import './Navigation.css'
-const pages = ['Home', 'Explore', 'Contact']
+const pages = ['Home', 'Explore', 'Contact', 'Manage']
 const settings = ['Logout']
 
 function NavBar() {
