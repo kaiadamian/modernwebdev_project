@@ -1,51 +1,59 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { checkUser } from "../Auth/AuthService";
 import Parse from "parse";
+import { TextField, Button, Box, Typography, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
 export default function ManageEvents() {
-  const navigate = useNavigate();
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventImage, setEventImage] = useState(null);
   const [dormId, setDormId] = useState("");
+  const [dorms, setDorms] = useState([]);
 
- if (!checkUser()) {
-    return (
-        <div>
-            <h2>Access Denied</h2>
-            <p>You must be logged in to view this page.</p>
-        </div>
-    );
-}
+  // 🔥 New: Fetch all Dorms on load
+  useEffect(() => {
+    const fetchDorms = async () => {
+      const Dorm = Parse.Object.extend("Dorm");
+      const query = new Parse.Query(Dorm);
+      const results = await query.find();
+      setDorms(results);
+    };
+
+    fetchDorms();
+  }, []);
+
+  if (!checkUser()) {
+    return <Navigate to="/auth/login" replace />;
+  }
 
   const handleAddEvent = async () => {
     if (!eventName.trim() || !eventDate) {
       alert("Event name and date are required.");
       return;
     }
-  
+
     try {
-      const Event = new Parse.Object("DormEvent");
-  
+      const Event = new Parse.Object("Event");
+
       Event.set("eventName", eventName);
       Event.set("eventDate", new Date(eventDate));
       Event.set("eventDescription", eventDescription);
       Event.set("creator", Parse.User.current());
-  
+
       if (eventImage) {
         const parseFile = new Parse.File(eventImage.name, eventImage);
         await parseFile.save();
         Event.set("eventImage", parseFile);
       }
-  
-      if (dormId.trim()) {
+
+      if (dormId) {
         const Dorm = new Parse.Object("Dorm");
         Dorm.set("objectId", dormId);
         Event.set("dormPointer", Dorm);
       }
-  
+
       await Event.save();
       alert(`Event "${eventName}" added successfully!`);
       setEventName("");
@@ -58,7 +66,6 @@ export default function ManageEvents() {
       alert("Failed to add event. Please try again.");
     }
   };
-  
 
   const handleDeleteEvent = async () => {
     if (!eventName.trim()) {
@@ -77,6 +84,8 @@ export default function ManageEvents() {
         setEventName("");
         setEventDescription("");
         setEventDate("");
+        setEventImage(null);
+        setDormId("");
       } else {
         alert(`No event found with the name "${eventName}".`);
       }
@@ -87,39 +96,77 @@ export default function ManageEvents() {
   };
 
   return (
-    <div>
-      <h2>Manage Events</h2>
-      <input
-        type="text"
-        placeholder="Event Name"
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
+      <Typography variant="h4" gutterBottom align="center">
+        Manage Events
+      </Typography>
+
+      <TextField
+        fullWidth
+        label="Event Name"
         value={eventName}
         onChange={(e) => setEventName(e.target.value)}
+        margin="normal"
       />
-      <input
-        type="text"
-        placeholder="Event Description (optional)"
+
+      <TextField
+        fullWidth
+        label="Event Description"
         value={eventDescription}
         onChange={(e) => setEventDescription(e.target.value)}
+        margin="normal"
       />
-      <input
+
+      <TextField
+        fullWidth
         type="datetime-local"
-        placeholder="Event Date"
+        label="Event Date"
+        InputLabelProps={{ shrink: true }}
         value={eventDate}
         onChange={(e) => setEventDate(e.target.value)}
+        margin="normal"
       />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setEventImage(e.target.files[0])}
-      />
-      <input
-        type="text"
-        placeholder="Dorm ObjectId (optional)"
-        value={dormId}
-        onChange={(e) => setDormId(e.target.value)}
-      />
-      <button onClick={handleAddEvent}>Add Event</button>
-      <button onClick={handleDeleteEvent}>Delete Event</button>
-    </div>
+
+      <Button
+        fullWidth
+        variant="contained"
+        component="label"
+        sx={{ my: 2 }}
+      >
+        Upload Event Image
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={(e) => setEventImage(e.target.files[0])}
+        />
+      </Button>
+
+      {/* 🔥 Dorm Pointer Dropdown */}
+      <FormControl fullWidth margin="normal">
+        <InputLabel id="dorm-select-label">Select Dorm</InputLabel>
+        <Select
+          labelId="dorm-select-label"
+          value={dormId}
+          label="Select Dorm"
+          onChange={(e) => setDormId(e.target.value)}
+        >
+          {dorms.map((dorm) => (
+            <MenuItem key={dorm.id} value={dorm.id}>
+              {dorm.get("dormName") || dorm.id}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+        <Button variant="contained" color="primary" onClick={handleAddEvent}>
+          Add Event
+        </Button>
+        <Button variant="outlined" color="error" onClick={handleDeleteEvent}>
+          Delete Event
+        </Button>
+      </Box>
+    </Box>
   );
 }
