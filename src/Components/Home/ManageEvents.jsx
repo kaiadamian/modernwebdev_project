@@ -142,7 +142,7 @@ export default function ManageEvents() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2 }}>
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2, bgcolor: "white"}}>
       <Typography variant="h4" gutterBottom align="center">
         Manage Events
       </Typography>
@@ -167,7 +167,6 @@ export default function ManageEvents() {
       <TextField
         fullWidth
         type="datetime-local"
-        label="Event Date"
         value={eventDate}
         onChange={(e) => setEventDate(e.target.value)}
         margin="normal"
@@ -188,7 +187,7 @@ export default function ManageEvents() {
         />
       </Button>
 
-      {/* Dorm Dropdown */}
+      {/* Dorm Pointer Dropdown */}
       <FormControl fullWidth margin="normal">
         <InputLabel id="dorm-select-label">Select Dorm</InputLabel>
         <Select

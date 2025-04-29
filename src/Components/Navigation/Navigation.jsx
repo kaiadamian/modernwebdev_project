@@ -13,10 +13,10 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import logo from '../../assets/nd_logo.png'
 import { useNavigate } from 'react-router-dom'
-import { getUser, logoutUser } from "../Auth/AuthService"
+import { checkUser, getUser, logoutUser } from "../Auth/AuthService"
 
 const pages = ['Home', 'Explore', 'Contact', 'Manage']
-const settings = ['Logout']
+const settings = ['Login', 'Logout']
 
 function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -51,6 +51,16 @@ function NavBar() {
         });
 
         handleCloseUserMenu();  // Close the settings menu after logout
+    }
+    const handleLogin = () => {
+        const isAuthenticated = checkUser();
+        if (!isAuthenticated) { // navigate to login only if the user is unauthenticated
+            navigate("/auth/login")
+            handleCloseUserMenu()
+        } else {    // user is already authenticated
+            alert("You are already signed in!");
+            handleCloseUserMenu();
+        }
     }
 
     return (
@@ -196,8 +206,11 @@ function NavBar() {
                     onClose={handleCloseUserMenu}
                     >
                     {settings.map((setting) => (
-                        <MenuItem key={setting} onClick={handleLogout}>
-                        <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                        <MenuItem
+                        key={setting}
+                        onClick={setting === 'Logout' ? handleLogout : handleLogin}
+                        >
+                            <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                         </MenuItem>
                 ))}
                 </Menu>
