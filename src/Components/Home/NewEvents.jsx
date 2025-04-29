@@ -37,14 +37,16 @@ const NewEvents = () => {
         <Typography variant="h6">No events available.</Typography>
       ) : (
         events.map((event, index) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
             <Grow in={true} timeout={500 * (index + 1)}>
             <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
               {/* Display event image */}
               {event.get('eventImage') && (
                 <Box
                   component="img"
-                  src={event.get('eventImage').url()}
+                  src={typeof event.get('eventImage') === 'string'
+                  ? event.get('eventImage') // If the eventImage is already a URL string
+                  : event.get('eventImage')?.url()} // If it's an object, use the URL method}
                   alt={event.get('eventName')}
                   sx={{ width: '100%', height: 200, objectFit: 'cover', marginBottom: 2 }}
                 />
