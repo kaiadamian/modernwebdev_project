@@ -31,20 +31,22 @@ export default function ManageEvents() {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   useEffect(() => {
-    const fetchDormsAndEvents = async () => {
-      try {
-        const Dorm = Parse.Object.extend("Dorm");
-        const dormQuery = new Parse.Query(Dorm);
-        const dormResults = await dormQuery.find();
-        setDorms(dormResults);
-
-        const Event = Parse.Object.extend("Event");
-        const eventQuery = new Parse.Query(Event);
-        const eventResults = await eventQuery.find();
-        setEvents(eventResults);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+    const fetchDormsAndEvents = () => {
+      const Dorm = Parse.Object.extend("Dorm");
+      const dormQuery = new Parse.Query(Dorm);
+      dormQuery.find()
+        .then((dormResults) => {
+          setDorms(dormResults);
+          const Event = Parse.Object.extend("Event");
+          const eventQuery = new Parse.Query(Event);
+          return eventQuery.find();
+        })
+        .then((eventResults) => {
+          setEvents(eventResults);
+        })
+        .catch((error) => {
+          console.error("Error fetching dorms/events:", error);
+        });
     };
 
     fetchDormsAndEvents();
@@ -54,54 +56,69 @@ export default function ManageEvents() {
     return <Navigate to="/auth/login" replace />;
   }
 
-  const handleAddEvent = async () => {
+  const handleAddEvent = () => {
     if (!eventName.trim() || !eventDate) {
       alert("Event name and date are required.");
       return;
     }
 
-    try {
-      const Event = new Parse.Object("Event");
+    const Event = new Parse.Object("Event");
 
-      Event.set("eventName", eventName);
-      Event.set("eventDate", new Date(eventDate));
-      Event.set("eventDescription", eventDescription);
-      Event.set("creator", Parse.User.current());
+    Event.set("eventName", eventName);
+    Event.set("eventDate", new Date(eventDate));
+    Event.set("eventDescription", eventDescription);
+    Event.set("creator", Parse.User.current());
 
-      if (eventImage) {
-        const parseFile = new Parse.File(eventImage.name, eventImage);
-        await parseFile.save();
-        Event.set("eventImage", parseFile);
-      }
+    const saveAndRefresh = () => {
+      Event.save()
+        .then((result) => {
+          if (result && result.id) {
+            alert(`Event "${eventName}" added successfully!`);
+            setEventName("");
+            setEventDescription("");
+            setEventDate("");
+            setEventImage(null);
+            setDormId("");
 
+            const EventClass = Parse.Object.extend("Event");
+            const eventQuery = new Parse.Query(EventClass);
+            return eventQuery.find();
+          } else {
+            throw new Error("Event save failed — no ID returned.");
+          }
+        })
+        .then((eventResults) => {
+          setEvents(eventResults);
+        })
+        .catch((error) => {
+          console.error("Error adding event:", error);
+          alert("Failed to add event. Please try again.");
+        });
+    };
+
+    if (eventImage) {
+      const parseFile = new Parse.File(eventImage.name, eventImage);
+      parseFile.save()
+        .then(() => {
+          Event.set("eventImage", parseFile);
+          if (dormId) {
+            const Dorm = new Parse.Object("Dorm");
+            Dorm.set("objectId", dormId);
+            Event.set("dormPointer", Dorm);
+          }
+          saveAndRefresh();
+        })
+        .catch((error) => {
+          console.error("Error saving image:", error);
+          alert("Image upload failed.");
+        });
+    } else {
       if (dormId) {
         const Dorm = new Parse.Object("Dorm");
         Dorm.set("objectId", dormId);
         Event.set("dormPointer", Dorm);
       }
-
-      const result = await Event.save();
-      console.log("Saved Event:", result);
-
-      if (result && result.id) {
-        alert(`Event "${eventName}" added successfully!`);
-        setEventName("");
-        setEventDescription("");
-        setEventDate("");
-        setEventImage(null);
-        setDormId("");
-
-        // Refresh events list
-        const Event = Parse.Object.extend("Event");
-        const eventQuery = new Parse.Query(Event);
-        const eventResults = await eventQuery.find();
-        setEvents(eventResults);
-      } else {
-        throw new Error("Event save failed — no ID returned.");
-      }
-    } catch (error) {
-      console.error("Error adding event:", error);
-      alert("Failed to add event. Please try again.");
+      saveAndRefresh();
     }
   };
 
@@ -109,7 +126,7 @@ export default function ManageEvents() {
     setOpenConfirmDialog(true);
   };
 
-  const handleDeleteEvent = async () => {
+  const handleDeleteEvent = () => {
     setOpenConfirmDialog(false);
 
     if (!eventToDelete) {
@@ -117,24 +134,25 @@ export default function ManageEvents() {
       return;
     }
 
-    try {
-      const Event = Parse.Object.extend("Event");
-      const query = new Parse.Query(Event);
-      const eventToDeleteObject = await query.get(eventToDelete);
-
-      if (eventToDeleteObject) {
-        await eventToDeleteObject.destroy();
+    const EventClass = Parse.Object.extend("Event");
+    const query = new Parse.Query(EventClass);
+    query.get(eventToDelete)
+      .then((eventToDeleteObject) => {
+        return eventToDeleteObject.destroy();
+      })
+      .then(() => {
         alert("Event deleted successfully!");
-
-        // Refresh events list
-        const updatedEvents = await new Parse.Query(Event).find();
+        const refreshQuery = new Parse.Query(EventClass);
+        return refreshQuery.find();
+      })
+      .then((updatedEvents) => {
         setEvents(updatedEvents);
         setEventToDelete("");
-      }
-    } catch (error) {
-      console.error("Error deleting event:", error);
-      alert("Failed to delete event. Please try again.");
-    }
+      })
+      .catch((error) => {
+        console.error("Error deleting event:", error);
+        alert("Failed to delete event. Please try again.");
+      });
   };
 
   const handleCancelDelete = () => {
@@ -142,7 +160,7 @@ export default function ManageEvents() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2, bgcolor: "white"}}>
+    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2, bgcolor: "white" }}>
       <Typography variant="h4" gutterBottom align="center">
         Manage Events
       </Typography>
@@ -246,11 +264,8 @@ export default function ManageEvents() {
         Delete Selected Event
       </Button>
 
-      {/* alert to confirm you want to delete */}
-      <Dialog
-        open={openConfirmDialog}
-        onClose={handleCancelDelete}
-      >
+      {/* Confirm Delete Dialog */}
+      <Dialog open={openConfirmDialog} onClose={handleCancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
