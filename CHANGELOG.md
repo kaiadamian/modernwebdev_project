@@ -1,4 +1,16 @@
 # Changelog
+## [v0.4.0] - 2025-04-29
+**Added:**
+  - Live chat feature (polling-based) 
+  - Manage Events dashboard with add/delete functionality for authorized users
+  - Public "About" page describing purpose of webpage
+  - Promise-based architecture 
+**Changed:**
+- Pivoted to Residental Life app
+**Fixed:**
+  - Improved UI/UX with CSS on individual pages via Material UI
+ 
+---
 
 ## [v0.3.0] - 2025-04-01
 **Added:**
@@ -10,7 +22,7 @@
   - Signing up gives a user authenticated access
 
 **Fixed:**
-  - Improved UI/UX with CSS on individual pages
+  - Improved UI/UX with CSS on individual pages 
 
 ---
 
