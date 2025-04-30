@@ -5,6 +5,7 @@
   - Manage Events dashboard with add/delete functionality for authorized users
   - Public "About" page describing purpose of webpage
   - Promise-based architecture
+  - Launched through Netlify @ https://oliviakaia-modernwebdev-final.netlify.app/auth/login
 
 **Changed:**
 - Pivoted to Residental Life app
