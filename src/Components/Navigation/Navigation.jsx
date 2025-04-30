@@ -15,7 +15,7 @@ import logo from '../../assets/nd_logo.png'
 import { useNavigate } from 'react-router-dom'
 import { checkUser, getUser, logoutUser } from "../Auth/AuthService"
 
-const pages = ['Home', 'Explore', 'Contact', 'Manage']
+const pages = ['Home', 'Explore', 'Contact', 'Manage', 'About']
 const settings = ['Login', 'Logout']
 
 function NavBar() {

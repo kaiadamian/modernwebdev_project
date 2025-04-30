@@ -6,6 +6,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx"
 import Navigation from './Navigation/Navigation.jsx'
 import Contact from './Contact/Contact.jsx'
 import ManageEvents from "./Home/ManageEvents.jsx";
+import About from "./About/About";
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 
 function Components() {
@@ -19,6 +20,7 @@ function Components() {
             <Route path="/home" element={<Home />} /> {/* able to be accessed by anyone */}
             <Route path="/explore" element={<Explore />} />  {/* able to be accessed by anyone */}
             <Route path="/manage" element={<ProtectedRoute element={ManageEvents} />} />
+            <Route path="/about" element={<About />} />
             <Route path="/contact" element={<ProtectedRoute path="/contact" element={Contact} />} />
             <Route path="*" element={<Navigate to="/auth/login" replace />} /> 
           </Routes>
