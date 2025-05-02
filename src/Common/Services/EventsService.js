@@ -83,3 +83,53 @@ export const getNewEvents = () => {
             return [];
         });
 };
+
+export const addEvent = ({ eventName, eventDate, eventDescription, eventImage, dormId }) => {
+    const Event = new Parse.Object("Event");
+
+    Event.set("eventName", eventName);
+    Event.set("eventDate", new Date(eventDate));
+    Event.set("eventDescription", eventDescription);
+    Event.set("creator", Parse.User.current());
+
+    const uploadImage = eventImage
+        ? new Parse.File(eventImage.name, eventImage).save().then((file) => {
+            Event.set("eventImage", file);
+        })
+        : Promise.resolve();
+
+    const setDormPointer = dormId
+        ? (() => {
+            const Dorm = new Parse.Object("Dorm");
+            Dorm.id = dormId;
+            Event.set("dormPointer", Dorm);
+        })()
+        : null;
+
+    return uploadImage.then(() => Event.save());
+};
+
+export const deleteEvent = (eventId) => {
+    const Event = Parse.Object.extend("Event");
+    const query = new Parse.Query(Event);
+
+    return query.get(eventId)
+        .then(event => event.destroy())
+        .catch(err => {
+            console.error("Delete error:", err);
+            throw err;
+        });
+};
+
+export const getAllEvents = () => {
+    const Event = Parse.Object.extend('Event');
+    const query = new Parse.Query(Event);
+    query.ascending('eventDate'); // or descending, based on your needs
+
+    return query.find()
+        .then(results => results)
+        .catch(error => {
+            console.error("Error fetching all events:", error);
+            return [];
+        });
+};

@@ -5,7 +5,7 @@ import AuthLogin from "./Auth/AuthLogin"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.jsx"
 import Navigation from './Navigation/Navigation.jsx'
 import Contact from './Contact/Contact.jsx'
-import ManageEvents from "./Home/ManageEvents.jsx";
+import ManageEvents from "./ManageEvents/ManageEvents.jsx";
 import About from "./About/About";
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 

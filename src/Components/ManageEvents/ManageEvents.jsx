@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { checkUser } from "../Auth/AuthService";
-import Parse from "parse";
+import {
+  getAllEvents,
+  addEvent,
+  deleteEvent,
+} from "../../Common/Services/EventsService";
+import { getAllDorms } from '../../Common/Services/DormsService';
 import {
   TextField,
   Button,
@@ -15,7 +20,7 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
 } from "@mui/material";
 
 export default function ManageEvents() {
@@ -27,29 +32,11 @@ export default function ManageEvents() {
   const [dorms, setDorms] = useState([]);
   const [events, setEvents] = useState([]);
   const [eventToDelete, setEventToDelete] = useState("");
-
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   useEffect(() => {
-    const fetchDormsAndEvents = () => {
-      const Dorm = Parse.Object.extend("Dorm");
-      const dormQuery = new Parse.Query(Dorm);
-      dormQuery.find()
-        .then((dormResults) => {
-          setDorms(dormResults);
-          const Event = Parse.Object.extend("Event");
-          const eventQuery = new Parse.Query(Event);
-          return eventQuery.find();
-        })
-        .then((eventResults) => {
-          setEvents(eventResults);
-        })
-        .catch((error) => {
-          console.error("Error fetching dorms/events:", error);
-        });
-    };
-
-    fetchDormsAndEvents();
+    getAllDorms().then(setDorms);
+    getAllEvents().then(setEvents);
   }, []);
 
   if (!checkUser()) {
@@ -62,64 +49,21 @@ export default function ManageEvents() {
       return;
     }
 
-    const Event = new Parse.Object("Event");
-
-    Event.set("eventName", eventName);
-    Event.set("eventDate", new Date(eventDate));
-    Event.set("eventDescription", eventDescription);
-    Event.set("creator", Parse.User.current());
-
-    const saveAndRefresh = () => {
-      Event.save()
-        .then((result) => {
-          if (result && result.id) {
-            alert(`Event "${eventName}" added successfully!`);
-            setEventName("");
-            setEventDescription("");
-            setEventDate("");
-            setEventImage(null);
-            setDormId("");
-
-            const EventClass = Parse.Object.extend("Event");
-            const eventQuery = new Parse.Query(EventClass);
-            return eventQuery.find();
-          } else {
-            throw new Error("Event save failed — no ID returned.");
-          }
-        })
-        .then((eventResults) => {
-          setEvents(eventResults);
-        })
-        .catch((error) => {
-          console.error("Error adding event:", error);
-          alert("Failed to add event. Please try again.");
-        });
-    };
-
-    if (eventImage) {
-      const parseFile = new Parse.File(eventImage.name, eventImage);
-      parseFile.save()
-        .then(() => {
-          Event.set("eventImage", parseFile);
-          if (dormId) {
-            const Dorm = new Parse.Object("Dorm");
-            Dorm.set("objectId", dormId);
-            Event.set("dormPointer", Dorm);
-          }
-          saveAndRefresh();
-        })
-        .catch((error) => {
-          console.error("Error saving image:", error);
-          alert("Image upload failed.");
-        });
-    } else {
-      if (dormId) {
-        const Dorm = new Parse.Object("Dorm");
-        Dorm.set("objectId", dormId);
-        Event.set("dormPointer", Dorm);
-      }
-      saveAndRefresh();
-    }
+    addEvent({ eventName, eventDescription, eventDate, eventImage, dormId })
+      .then((result) => {
+        alert(`Event "${eventName}" added successfully!`);
+        setEventName("");
+        setEventDescription("");
+        setEventDate("");
+        setEventImage(null);
+        setDormId("");
+        return getAllEvents();
+      })
+      .then(setEvents)
+      .catch((error) => {
+        console.error("Error adding event:", error);
+        alert("Failed to add event. Please try again.");
+      });
   };
 
   const handleConfirmDelete = () => {
@@ -134,21 +78,13 @@ export default function ManageEvents() {
       return;
     }
 
-    const EventClass = Parse.Object.extend("Event");
-    const query = new Parse.Query(EventClass);
-    query.get(eventToDelete)
-      .then((eventToDeleteObject) => {
-        return eventToDeleteObject.destroy();
-      })
+    deleteEvent(eventToDelete)
       .then(() => {
         alert("Event deleted successfully!");
-        const refreshQuery = new Parse.Query(EventClass);
-        return refreshQuery.find();
-      })
-      .then((updatedEvents) => {
-        setEvents(updatedEvents);
         setEventToDelete("");
+        return getAllEvents();
       })
+      .then(setEvents)
       .catch((error) => {
         console.error("Error deleting event:", error);
         alert("Failed to delete event. Please try again.");
@@ -160,12 +96,21 @@ export default function ManageEvents() {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 5, p: 3, boxShadow: 3, borderRadius: 2, bgcolor: "white" }}>
+    <Box
+      sx={{
+        maxWidth: 600,
+        mx: "auto",
+        mt: 5,
+        p: 3,
+        boxShadow: 3,
+        borderRadius: 2,
+        bgcolor: "white",
+      }}
+    >
       <Typography variant="h4" gutterBottom align="center">
         Manage Events
       </Typography>
 
-      {/* ADD EVENT SECTION */}
       <TextField
         fullWidth
         label="Event Name"
@@ -190,12 +135,7 @@ export default function ManageEvents() {
         margin="normal"
       />
 
-      <Button
-        fullWidth
-        variant="contained"
-        component="label"
-        sx={{ my: 2 }}
-      >
+      <Button fullWidth variant="contained" component="label" sx={{ my: 2 }}>
         Upload Event Image
         <input
           type="file"
@@ -205,7 +145,6 @@ export default function ManageEvents() {
         />
       </Button>
 
-      {/* Dorm Pointer Dropdown */}
       <FormControl fullWidth margin="normal">
         <InputLabel id="dorm-select-label">Select Dorm</InputLabel>
         <Select
@@ -232,7 +171,6 @@ export default function ManageEvents() {
         Add Event
       </Button>
 
-      {/* DELETE EVENT SECTION */}
       <Typography variant="h6" sx={{ mt: 4, mb: 2 }}>
         Delete Event
       </Typography>
@@ -264,7 +202,6 @@ export default function ManageEvents() {
         Delete Selected Event
       </Button>
 
-      {/* Confirm Delete Dialog */}
       <Dialog open={openConfirmDialog} onClose={handleCancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>

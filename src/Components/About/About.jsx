@@ -21,7 +21,7 @@ export default function About() {
         </Typography>
 
         <Typography variant="body1">
-          Campus Connect was designed by students, for students — with the goal of making campus feel smaller,
+          Campus Connect was designed by students, for students, with the goal of making campus feel smaller,
           more connected, and more engaging.
         </Typography>
 

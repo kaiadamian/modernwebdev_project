@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Parse from '../../parseConfig';
 import {
   Box,
   Typography,
@@ -11,6 +10,12 @@ import {
   Tooltip,
 } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
+import {
+  fetchMessagesForCurrentUser,
+  sendMessageToAdmin,
+  getAdminUser
+} from '../../Common/Services/MessageService';
+import Parse from '../../parseConfig';
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);
@@ -22,30 +27,7 @@ const ChatBox = () => {
   const [resumed, setResumed] = useState(false);
 
   const fetchMessages = () => {
-    const currentUser = Parse.User.current();
-    if (!currentUser) return;
-
-    const userQuery = new Parse.Query(Parse.User);
-    userQuery.equalTo('username', 'admin@nd.edu');
-
-    userQuery
-      .first()
-      .then((adminUser) => {
-        const Message = Parse.Object.extend('Message');
-
-        const sentByUser = new Parse.Query(Message)
-          .equalTo('sender', currentUser)
-          .equalTo('receiver', adminUser);
-
-        const sentByAdmin = new Parse.Query(Message)
-          .equalTo('sender', adminUser)
-          .equalTo('receiver', currentUser);
-
-        const combinedQuery = Parse.Query.or(sentByUser, sentByAdmin);
-        combinedQuery.ascending('createdAt');
-
-        return combinedQuery.find();
-      })
+    fetchMessagesForCurrentUser()
       .then((results) => {
         if (
           results.length > previousMessageCount.current &&
@@ -54,46 +36,10 @@ const ChatBox = () => {
         ) {
           audioRef.current.play().catch(() => {});
         }
-
         previousMessageCount.current = results.length;
         setMessages(results);
       })
-      .catch((error) => {
-        console.error('Error fetching messages:', error);
-      });
-  };
-
-  const sendMessage = () => {
-    const currentUser = Parse.User.current();
-    if (!currentUser) {
-      alert('You must be logged in to send messages.');
-      return;
-    }
-
-    if (!newMessage.trim()) return;
-
-    const userQuery = new Parse.Query(Parse.User);
-    userQuery.equalTo('username', 'admin@nd.edu');
-
-    userQuery
-      .first()
-      .then((adminUser) => {
-        const Message = Parse.Object.extend('Message');
-        const message = new Message();
-
-        message.set('text', newMessage);
-        message.set('sender', currentUser);
-        message.set('receiver', adminUser);
-
-        return message.save();
-      })
-      .then(() => {
-        setNewMessage('');
-        fetchMessages();
-      })
-      .catch((error) => {
-        console.error('Error sending message:', error);
-      });
+      .catch((error) => console.error('Error fetching messages:', error));
   };
 
   useEffect(() => {
@@ -123,6 +69,24 @@ const ChatBox = () => {
     return () => window.removeEventListener('click', handleInteraction);
   }, []);
 
+  const sendMessage = () => {
+    if (!Parse.User.current()) {
+      alert("You must be logged in to send messages.");
+      return;
+    }
+    if (!newMessage.trim()) return;
+
+    sendMessageToAdmin(newMessage)
+      .then(() => {
+        setNewMessage('');
+        fetchMessages();
+      })
+      .catch((error) => {
+        console.error('Error sending message:', error);
+        alert('Failed to send message.');
+      });
+  };
+
   return (
     <Box sx={{ maxWidth: 500, margin: 'auto', mt: 4 }}>
       {resumed && (
@@ -144,12 +108,7 @@ const ChatBox = () => {
             const createdAt = msg.createdAt;
 
             return (
-              <ListItem
-                key={idx}
-                sx={{
-                  justifyContent: isYou ? 'flex-end' : 'flex-start',
-                }}
-              >
+              <ListItem key={idx} sx={{ justifyContent: isYou ? 'flex-end' : 'flex-start' }}>
                 <Box
                   sx={{
                     bgcolor: isYou ? '#e3f2fd' : '#f0f0f0',
@@ -162,28 +121,16 @@ const ChatBox = () => {
                   }}
                 >
                   <Typography variant="body2" fontWeight="bold" gutterBottom>
-                    {isYou
-                      ? 'You'
-                      : isAdmin
-                      ? 'Admin'
-                      : msg.get('sender')?.get('username')}
+                    {isYou ? 'You' : isAdmin ? 'Admin' : msg.get('sender')?.get('username')}
                   </Typography>
-
                   <Typography variant="body1">{msg.get('text')}</Typography>
                   {createdAt && (
                     <Tooltip title={createdAt.toLocaleString()} arrow>
                       <Typography
                         variant="caption"
-                        sx={{
-                          color: 'gray',
-                          mt: 0.5,
-                          display: 'block',
-                          textAlign: 'right',
-                        }}
+                        sx={{ color: 'gray', mt: 0.5, display: 'block', textAlign: 'right' }}
                       >
-                        {formatDistanceToNow(new Date(createdAt), {
-                          addSuffix: true,
-                        })}
+                        {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
                       </Typography>
                     </Tooltip>
                   )}
@@ -191,7 +138,6 @@ const ChatBox = () => {
               </ListItem>
             );
           })}
-
           <div ref={messageEndRef} />
         </List>
       </Paper>
