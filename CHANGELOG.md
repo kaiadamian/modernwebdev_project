@@ -4,7 +4,8 @@
   - Live chat feature (polling-based) 
   - Manage Events dashboard with add/delete functionality for authorized users
   - Public "About" page describing purpose of webpage
-  - Promise-based architecture
+  - New "Home" page featuring newest events and convenient routing to "Explore"
+  - New "Explore" page featuring each dorm and their information and events
   - Launched through Netlify @ https://oliviakaia-modernwebdev-final.netlify.app/auth/login
 
 **Changed:**
