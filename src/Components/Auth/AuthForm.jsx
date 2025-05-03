@@ -4,12 +4,6 @@ import { TextField, Button, Box, Typography, Paper } from "@mui/material"
 const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
   return (
     // retrieve user's first name, last name, email, and password
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-    >
       <Paper elevation={3} sx={{ padding: 4, width: 400 }}>
         <Typography variant="h5" align="center" gutterBottom>
           {isLogin ? "Login" : "Register"}
@@ -94,7 +88,6 @@ const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
           </Box>
         </form>
       </Paper>
-    </Box>
   )
 }
 
