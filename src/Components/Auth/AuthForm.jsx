@@ -1,8 +1,9 @@
-/* Authentication form for reuse in AuthLogin, AuthRegister modules */
+/* tAuthentication Form- Stateless Child Componen for reuse in AuthLogin, AuthRegister */
 import { TextField, Button, Box, Typography, Paper } from "@mui/material"
 
 const AuthForm = ({ user, isLogin, onChange, onSubmit, emailError }) => {
   return (
+    // retrieve user's first name, last name, email, and password
     <Box
       display="flex"
       justifyContent="center"

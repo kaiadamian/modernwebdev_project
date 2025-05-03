@@ -1,161 +1,83 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  List,
-  ListItem,
-  Tooltip,
-} from '@mui/material';
-import { formatDistanceToNow } from 'date-fns';
-import {
-  fetchMessagesForCurrentUser,
-  sendMessageToAdmin,
-  getAdminUser
-} from '../../Common/Services/MessageService';
+/* ChatBox - Stateful Parent Component for Contact Page */
+import React, { useEffect, useRef, useState } from 'react';
 import Parse from '../../parseConfig';
+import { fetchMessagesForCurrentUser, sendMessageToAdmin } from '../../Common/Services/MessageService';
+import ChatBoxView from './ChatBoxView';
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
-  const previousMessageCount = useRef(0);
-  const audioRef = useRef(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const messageEndRef = useRef(null);
-  const [resumed, setResumed] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const [resumed, setResumed] = useState(false);
+    const [hasInteracted, setHasInteracted] = useState(false);
+    const previousMessageCount = useRef(0);
+    const audioRef = useRef(null);
+    const messageEndRef = useRef(null);
 
-  const fetchMessages = () => {
-    fetchMessagesForCurrentUser()
-      .then((results) => {
-        if (
-          results.length > previousMessageCount.current &&
-          hasInteracted &&
-          audioRef.current
-        ) {
-          audioRef.current.play().catch(() => {});
-        }
-        previousMessageCount.current = results.length;
-        setMessages(results);
-      })
-      .catch((error) => console.error('Error fetching messages:', error));
-  };
+    const fetchMessages = () => {
+        fetchMessagesForCurrentUser()
+        .then((results) => {
+            if (
+            results.length > previousMessageCount.current &&
+            hasInteracted &&
+            audioRef.current
+            ) {
+            audioRef.current.play().catch(() => {});
+            }
+            previousMessageCount.current = results.length;
+            setMessages(results);
+        })
+        .catch((error) => console.error('Error fetching messages:', error));
+    };
 
-  useEffect(() => {
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  useEffect(() => {
-    const user = Parse.User.current();
-    if (user) {
-      setResumed(true);
-      setTimeout(() => setResumed(false), 5000);
-    }
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const handleInteraction = () => setHasInteracted(true);
-    window.addEventListener('click', handleInteraction, { once: true });
-    return () => window.removeEventListener('click', handleInteraction);
-  }, []);
-
-  const sendMessage = () => {
-    if (!Parse.User.current()) {
-      alert("You must be logged in to send messages.");
-      return;
-    }
-    if (!newMessage.trim()) return;
-
-    sendMessageToAdmin(newMessage)
-      .then(() => {
-        setNewMessage('');
+    useEffect(() => {
         fetchMessages();
-      })
-      .catch((error) => {
-        console.error('Error sending message:', error);
-        alert('Failed to send message.');
-      });
-  };
+        const interval = setInterval(fetchMessages, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
-  return (
-    <Box sx={{ maxWidth: 500, margin: 'auto', mt: 4 }}>
-      {resumed && (
-        <Paper elevation={1} sx={{ p: 1, mb: 2, backgroundColor: '#e0f7fa' }}>
-          <Typography variant="body1" align="center" sx={{ color: '#00796b' }}>
-            Chat resumed.
-          </Typography>
-        </Paper>
-      )}
-      <Typography variant="h5" color="primary.main" gutterBottom>
-        Chat with Admin
-      </Typography>
-      <Paper elevation={3} sx={{ height: 300, overflowY: 'auto', mb: 2, p: 2 }}>
-        <List>
-          {messages.map((msg, idx) => {
-            const currentUser = Parse.User.current();
-            const isYou = msg.get('sender')?.id === currentUser?.id;
-            const isAdmin = msg.get('sender')?.get('username') === 'admin@nd.edu';
-            const createdAt = msg.createdAt;
+    useEffect(() => {
+        const user = Parse.User.current();
+        if (user) {
+        setResumed(true);
+        setTimeout(() => setResumed(false), 5000);
+        }
+    }, []);
 
-            return (
-              <ListItem key={idx} sx={{ justifyContent: isYou ? 'flex-end' : 'flex-start' }}>
-                <Box
-                  sx={{
-                    bgcolor: isYou ? '#e3f2fd' : '#f0f0f0',
-                    color: 'black',
-                    p: 1.2,
-                    px: 2,
-                    borderRadius: 2,
-                    maxWidth: '70%',
-                    display: 'inline-block',
-                  }}
-                >
-                  <Typography variant="body2" fontWeight="bold" gutterBottom>
-                    {isYou ? 'You' : isAdmin ? 'Admin' : msg.get('sender')?.get('username')}
-                  </Typography>
-                  <Typography variant="body1">{msg.get('text')}</Typography>
-                  {createdAt && (
-                    <Tooltip title={createdAt.toLocaleString()} arrow>
-                      <Typography
-                        variant="caption"
-                        sx={{ color: 'gray', mt: 0.5, display: 'block', textAlign: 'right' }}
-                      >
-                        {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
-                      </Typography>
-                    </Tooltip>
-                  )}
-                </Box>
-              </ListItem>
-            );
-          })}
-          <div ref={messageEndRef} />
-        </List>
-      </Paper>
-      <Box display="flex">
-        <TextField
-          fullWidth
-          variant="outlined"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message!"
+    useEffect(() => {
+        const handleInteraction = () => setHasInteracted(true);
+        window.addEventListener('click', handleInteraction, { once: true });
+        return () => window.removeEventListener('click', handleInteraction);
+    }, []);
+
+    const sendMessage = () => {
+        if (!Parse.User.current()) {
+        alert("You must be logged in to send messages.");
+        return;
+        }
+        if (!newMessage.trim()) return;
+
+        sendMessageToAdmin(newMessage)
+        .then(() => {
+            setNewMessage('');
+            fetchMessages();
+        })
+        .catch((error) => {
+            console.error('Error sending message:', error);
+            alert('Failed to send message.');
+        });
+    };
+
+    return (
+        <ChatBoxView
+        messages={messages}
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+        sendMessage={sendMessage}
+        resumed={resumed}
+        audioRef={audioRef}
+        messageEndRef={messageEndRef}
         />
-        <Button variant="contained" onClick={sendMessage}>
-          Send
-        </Button>
-      </Box>
-      <audio ref={audioRef} src="/alertnoise.mp3" preload="auto" />
-    </Box>
-  );
+    );
 };
 
 export default ChatBox;

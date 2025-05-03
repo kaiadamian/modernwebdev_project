@@ -1,4 +1,4 @@
-/* Login Page */
+/* Login Page - Stateful Parent Component */
 import { useEffect, useState } from "react"
 import { checkUser, loginUser } from "./AuthService"
 import AuthForm from "./AuthForm"
@@ -7,55 +7,55 @@ import { Typography, Link as MUILink, Box } from "@mui/material"
 import { Link as RouterLink } from "react-router-dom"
 
 const AuthLogin = () => {
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-  const [currentUser, setCurrentUser] = useState({
-    email: "",
-    password: ""
-  })
+    const [currentUser, setCurrentUser] = useState({
+        email: "",
+        password: ""
+    })
 
-  const [add, setAdd] = useState(false)
-  const [emailError, setEmailError] = useState(false)
+    const [add, setAdd] = useState(false)
+    const [emailError, setEmailError] = useState(false)
 
-  useEffect(() => {
-    if (checkUser()) {
-      alert("You are already logged in")
-      navigate("/home")
-    }
-  }, [navigate])
-
-  useEffect(() => {
-    if (currentUser && add && !emailError) {
-      loginUser(currentUser).then((userLoggedIn) => {
-        if (userLoggedIn) {
-          alert(`${userLoggedIn.get("firstName")}, you successfully logged in!`)
-          navigate("/home")
+    useEffect(() => {
+        if (checkUser()) {
+        alert("You are already logged in")
+        navigate("/home")
         }
-        setAdd(false)
-      })
-    }
+    }, [navigate])
+
+    useEffect(() => {
+        if (currentUser && add && !emailError) {
+        loginUser(currentUser).then((userLoggedIn) => {
+            if (userLoggedIn) {
+            alert(`${userLoggedIn.get("firstName")}, you successfully logged in!`)
+            navigate("/home")
+            }
+            setAdd(false)
+        })
+        }
   }, [navigate, currentUser, add, emailError])
 
   const onChangeHandler = (e) => {
-    const { name, value } = e.target
+        const { name, value } = e.target
 
-    if (name === "email") {
-      setEmailError(!value.endsWith("@nd.edu"))
-    }
+        if (name === "email") {
+        setEmailError(!value.endsWith("@nd.edu"))
+        }
 
-    setCurrentUser((prev) => ({
-      ...prev,
-      [name]: value
-    }))
+        setCurrentUser((prev) => ({
+        ...prev,
+        [name]: value
+        }))
   }
 
   const onSubmitHandler = (e) => {
-    e.preventDefault()
-    if (!currentUser.email.endsWith("@nd.edu")) {
-      setEmailError(true)
-      return
-    }
-    setAdd(true)
+        e.preventDefault()
+        if (!currentUser.email.endsWith("@nd.edu")) {
+        setEmailError(true)
+        return
+        }
+        setAdd(true)
   }
 
   return (
