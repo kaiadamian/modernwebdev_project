@@ -5,7 +5,7 @@ In addition, Hall Presidents can find it hard to advertise dorm events to larger
 SOLUTION: Campus Connect! Hall Presidents can promote their events to the entire campus community, increase engagement, and earn points toward Hall of the Year! Campus Connect is a centralized location for every dorm event occurring to make students never miss one. SAO is able to login as admin and communicate with HPC to ensure events are approved or answer questions as they come in.
 
 ## Built With
-React, Material UI
+React, Material UI, Vite
 
 ## Getting Started
 * First, unzip the folder and open the unzipped folder in VSCode
