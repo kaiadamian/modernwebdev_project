@@ -35,6 +35,7 @@ in order to send a message to that user as the admin, complete the following ste
 * add a row, and paste that pointer into the 'receiver' column
 * then, type the message you want to reply in the 'text' column
 * press the green 'Add' button to confirm addition, and your new message will pop up in the user's chatbox!
+
 *NOTE* This process is necessary since LiveQuery was behind a paywall so we had to implement the chat using polling!
 
 ## TO SEE MESSAGES SENT BETWEEN A USER AND ADMIN
