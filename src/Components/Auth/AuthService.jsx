@@ -15,12 +15,12 @@ export const createUser = (newUser) => {
     return user
         .signUp()
         .then((newUserSaved) => {
-        return newUserSaved;
+        return newUserSaved
         })
         .catch((error) => {
         alert(`Error: ${error.message}`)
-        });
-};
+        })
+}
 
 export const loginUser = (currUser) => {
     // used in auth login component, logs in User if found on Parse database
@@ -38,13 +38,13 @@ export const loginUser = (currUser) => {
         })
         .catch((error) => {
         alert(`Error: ${error.message}`)
-        });
-};
+        })
+}
 
 export const checkUser = () => {
     // used for protected routes to check if the user is authenticated
     return Parse.User.current()?.authenticated
-};
+}
 
 
 export const logoutUser = () => {
@@ -52,15 +52,15 @@ export const logoutUser = () => {
     return Parse.User.logOut()
         .then(() => {
         // after logging out, current user will be null
-        const currentUser = Parse.User.current();
-        console.log("Current user after logout:", currentUser);  // null
+        const currentUser = Parse.User.current()
+        console.log("Current user after logout:", currentUser)  // null
         })
         .catch((error) => {
-        console.error("Error logging out:", error);
-        });
-};
+        console.error("Error logging out:", error)
+        })
+}
 
 export const getUser = () => {
     // get the current user
-    return Parse.User.current(); 
-};
+    return Parse.User.current() 
+}

@@ -7,6 +7,7 @@ const EventCard = ({ event, index }) => {
   const navigate = useNavigate()
 
   return (
+    // render each event as a card with image, dorm name, event name, date, and description
     <Grid size={{xs: 12, sm: 6, md: 4}}>
       <Grow in={true} timeout={500 * (index + 1)}>
         <Paper elevation={3} sx={{ p: 2, height: '100%' }}>

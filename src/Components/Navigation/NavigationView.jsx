@@ -20,6 +20,7 @@ const NavigationView = ({
     handleUserAction,
     userInitial
     }) => (
+    // render the navigation bar, handling changes in screen size
     <AppBar position="static" sx={{ backgroundColor: '#ffffff' }} elevation={0}>
         <Container maxWidth="xl">
         <Toolbar disableGutters>
