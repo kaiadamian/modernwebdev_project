@@ -62,7 +62,14 @@ const AuthRegister = () => {
   };
 
   return (
-    <Box>
+    <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        mt={8}
+        gap={1}
+    >
       <AuthForm
         user={newUser}
         isLogin={false}
