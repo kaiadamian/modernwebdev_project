@@ -28,7 +28,7 @@ in order to send a message to that user as the admin, complete the following ste
 * press the green 'Add' button to confirm addition, and your new message will pop up in the user's chatbox!
 
 ## TO SEE MESSAGES SENT BETWEEN A USER AND ADMIN
-* log in with email= kdamian@nd.edu, password = 12345 to see that our chat box works!
+* log in with email = kdamian@nd.edu, password = 12345 to see that our chat box works!
 
 ## Collaborators
 Kaia Damian and Olivia Zino
