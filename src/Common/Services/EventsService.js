@@ -1,6 +1,7 @@
 /* SERVICE FOR PARSE SERVER OPERATIONS ON 'Event' CLASS */
 import Parse from 'parse';
 
+/* READ operation - fetch dorm's events from its pointer */
 export const getEventsByDormId = (dormId) => {
     const Event = Parse.Object.extend('Event');
     const query = new Parse.Query(Event);
@@ -30,6 +31,7 @@ export const getEventsByDormId = (dormId) => {
         });
 };
 
+/* READ operation - get 6 newest events, as well as retrieve the dorm name of each event for link to explore */
 export const getNewEvents = () => {
     const Event = Parse.Object.extend('Event');
     const query = new Parse.Query(Event);
@@ -84,6 +86,7 @@ export const getNewEvents = () => {
         });
 };
 
+/* CREATE operation - add an event */
 export const addEvent = ({ eventName, eventDate, eventDescription, eventImage, dormId }) => {
     const Event = new Parse.Object("Event");
 
@@ -109,6 +112,7 @@ export const addEvent = ({ eventName, eventDate, eventDescription, eventImage, d
     return uploadImage.then(() => Event.save());
 };
 
+/* DELETE operation - delete event */
 export const deleteEvent = (eventId) => {
     const Event = Parse.Object.extend("Event");
     const query = new Parse.Query(Event);
@@ -121,6 +125,7 @@ export const deleteEvent = (eventId) => {
         });
 };
 
+/* READ operation - get all events */
 export const getAllEvents = () => {
     const Event = Parse.Object.extend('Event');
     const query = new Parse.Query(Event);

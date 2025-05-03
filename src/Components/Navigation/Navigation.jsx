@@ -5,20 +5,25 @@ import { checkUser, getUser, logoutUser } from '../Auth/AuthService'
 import NavigationView from './NavigationView.jsx'
 
 const Navigation = () => {
+    // track where to open the dropdown menus
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
+
     const navigate = useNavigate()
 
+    // menu handlers
     const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget)
     const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget)
     const handleCloseNavMenu = () => setAnchorElNav(null)
     const handleCloseUserMenu = () => setAnchorElUser(null)
 
+    // navigation handler
     const handlePageNav = (page) => {
         handleCloseNavMenu()
         navigate(`/${page.toLowerCase()}`)
     }
 
+    // handles user dropdown action (logout/login)
     const handleUserAction = (action) => {
         if (action === 'Logout') {
         logoutUser()
@@ -42,6 +47,7 @@ const Navigation = () => {
     }
 
     return (
+        // pass data down to NavigationView
         <NavigationView
         pages={['Home', 'Explore', 'Contact', 'Manage', 'About']}
         settings={['Login', 'Logout']}

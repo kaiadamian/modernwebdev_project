@@ -23,6 +23,7 @@ const ChatBoxView = ({
     messageEndRef,
     }) => {
     return (
+        // display the chat box
         <Box sx={{ maxWidth: 500, margin: 'auto', mt: 4 }}>
         {resumed && (
             <Paper elevation={1} sx={{ p: 1, mb: 2, backgroundColor: '#e0f7fa' }}>

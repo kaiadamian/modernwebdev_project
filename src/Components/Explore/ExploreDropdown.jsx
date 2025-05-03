@@ -13,7 +13,8 @@ import {
     Paper,
   } from '@mui/material'
   
-  const ExploreDropdown = ({ dorms, selectedDorm, events, onDormSelect }) => (
+const ExploreDropdown = ({ dorms, selectedDorm, events, onDormSelect }) => (
+    // display the explore dropdown and the selected dorm's information and events
     <Container sx={{ marginTop: 4 }}>
       <Paper sx={{ backgroundColor: '#ffffff', padding: 2 }}>
         <Typography variant="h1" color="primary.main">
@@ -113,7 +114,7 @@ import {
         ))}
       </Grid>
     </Container>
-  )
+)
   
-  export default ExploreDropdown
+export default ExploreDropdown
   

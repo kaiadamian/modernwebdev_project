@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { checkUser } from "../Auth/AuthService";
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
+    // handle protected routes
+
     console.log("element: ", Component)
     const navigate = useNavigate()
 
