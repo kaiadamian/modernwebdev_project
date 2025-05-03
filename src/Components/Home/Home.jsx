@@ -1,10 +1,11 @@
-/* Home Page */
+/* Home Page - Routed Container Component */
 import NewEvents from './NewEvents.jsx'
 import { Box, Container, Typography, Paper, Divider, Grow } from '@mui/material'
 
 function Home() {
     return (
         <Container sx={{ marginTop: 4 }}>
+            {/* display reslife info on mui paper elements */}
             <Grow in={true} timeout={500}>
             <Paper sx={{ backgroundColor: 'white', padding: 2 }}>
                 <Typography variant="h1" color="primary.main">
@@ -32,6 +33,7 @@ function Home() {
                     </Typography>
             </Paper>
             </Grow>
+            {/* display newest events */}
             <NewEvents/>
         </Container>
     )

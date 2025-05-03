@@ -1,3 +1,4 @@
+/* ProtectedRoute - used for managing protected routes */
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { checkUser } from "../Auth/AuthService";

@@ -1,12 +1,12 @@
-/* Explore Page */
+/* Explore Page - Routed Container Component */
 
-import ExploreDropdown from './ExploreDropdown.jsx'
+import ExploreParent from './ExploreParent.jsx'
 import { Container } from '@mui/material'
 
 function Explore() {
     return (
         <Container sx={{ marginTop: 4 }}>
-            <ExploreDropdown /> 
+            <ExploreParent /> 
         </Container>
       )
 }

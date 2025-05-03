@@ -1,8 +1,10 @@
+/* About Campus Connect - an about page for our project */
 import { Box, Typography, Container, Divider, Avatar, Stack } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 
 export default function About() {
   return (
+    // display information about project using MUI elements
     <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
       <Box sx={{ boxShadow: 4, p: 5, borderRadius: 3, bgcolor: "background.paper" }}>
         <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2 }}>

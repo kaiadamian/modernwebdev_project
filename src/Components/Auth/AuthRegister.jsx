@@ -1,4 +1,4 @@
-/* Register Page */
+/* Register Page - Stateful Parent Component */
 import { useEffect, useState } from "react";
 import { checkUser, createUser } from "./AuthService";
 import AuthForm from "./AuthForm";

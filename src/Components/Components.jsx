@@ -1,3 +1,4 @@
+/* Components - manages routing and protected routes */
 import Home from './Home/Home.jsx'
 import Explore from './Explore/Explore.jsx'
 import AuthRegister from "./Auth/AuthRegister"
