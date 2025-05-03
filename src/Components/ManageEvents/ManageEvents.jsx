@@ -8,7 +8,7 @@ import {
   deleteEvent,
 } from "../../Common/Services/EventsService";
 import { getAllDorms } from "../../Common/Services/DormsService";
-import ManageEventsForm from "./ManageEventsForm"; // 👈 child component
+import ManageEventsForm from "./ManageEventsForm"; // child component
 
 export default function ManageEvents() {
   const [eventName, setEventName] = useState("");
@@ -53,18 +53,19 @@ export default function ManageEvents() {
       });
   };
 
+  // validate inputs before calling Parse service
   const handleDeleteEvent = () => {
     setOpenConfirmDialog(false);
     if (!eventToDelete) {
       alert("Please select an event to delete.");
       return;
     }
-
+// ensure that the user actually wants to delete
     deleteEvent(eventToDelete)
       .then(() => {
         alert("Event deleted successfully!");
         setEventToDelete("");
-        return getAllEvents();
+        return getAllEvents(); // refresh event list
       })
       .then(setEvents)
       .catch((error) => {

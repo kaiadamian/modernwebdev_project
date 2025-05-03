@@ -1,4 +1,9 @@
 /* ChatBox - Stateful Parent Component for Contact Page */
+
+/* Instead of payng for liveQuery, we used polling for longevity since we launched our website through Netlify. 
+Every few seconds, fetchMessagesForCurrentUser is called to retrieve new messages between the logged-in user and 
+the admin page (back4app manual editing).  */ 
+
 import React, { useEffect, useRef, useState } from 'react';
 import Parse from '../../parseConfig';
 import { fetchMessagesForCurrentUser, sendMessageToAdmin } from '../../Common/Services/MessageService';
@@ -10,8 +15,8 @@ const ChatBox = () => {
     const [resumed, setResumed] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
     const previousMessageCount = useRef(0);
-    const audioRef = useRef(null);
-    const messageEndRef = useRef(null);
+    const audioRef = useRef(null); // should play the alert sound (wonky at times)
+    const messageEndRef = useRef(null); // scrolls to the newest message
 
     const fetchMessages = () => {
         fetchMessagesForCurrentUser()
@@ -28,13 +33,13 @@ const ChatBox = () => {
         })
         .catch((error) => console.error('Error fetching messages:', error));
     };
-
+// start polling every 3 seconds to simulate live chat 
     useEffect(() => {
         fetchMessages();
         const interval = setInterval(fetchMessages, 3000);
         return () => clearInterval(interval);
     }, []);
-
+// display a banner to let the user know their previous session has been restored
     useEffect(() => {
         const user = Parse.User.current();
         if (user) {
@@ -43,6 +48,7 @@ const ChatBox = () => {
         }
     }, []);
 
+// save the message in the parse database
     useEffect(() => {
         const handleInteraction = () => setHasInteracted(true);
         window.addEventListener('click', handleInteraction, { once: true });
@@ -59,14 +65,15 @@ const ChatBox = () => {
         sendMessageToAdmin(newMessage)
         .then(() => {
             setNewMessage('');
-            fetchMessages();
+            fetchMessages(); // refresh after sending
         })
         .catch((error) => {
             console.error('Error sending message:', error);
             alert('Failed to send message.');
         });
     };
-
+    
+// render the stateless component
     return (
         <ChatBoxView
         messages={messages}
