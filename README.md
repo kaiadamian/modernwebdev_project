@@ -8,6 +8,7 @@ SOLUTION: Campus Connect! Hall Presidents can promote their events to the entire
 React, Material UI
 
 ## Getting Started
+* First, unzip the folder and open the unzipped folder in VSCode
 * Prerequisites
   * npm
     ```sh
@@ -19,7 +20,7 @@ React, Material UI
     ```
 ## Running 
 There are 2 ways to access this webpage
-* running locally
+* running locally from the root of the 
     ```sh
     npm run dev 
     ```
@@ -34,9 +35,10 @@ in order to send a message to that user as the admin, complete the following ste
 * add a row, and paste that pointer into the 'receiver' column
 * then, type the message you want to reply in the 'text' column
 * press the green 'Add' button to confirm addition, and your new message will pop up in the user's chatbox!
+*NOTE* This process is necessary since LiveQuery was behind a paywall so we had to implement the chat using polling!
 
 ## TO SEE MESSAGES SENT BETWEEN A USER AND ADMIN
-* log in with email = kdamian@nd.edu, password = 12345 to see that our chat box works!
+* Log in with email = kdamian@nd.edu, password = 12345 to see that our chat box works!
 
 ## Collaborators
 Kaia Damian and Olivia Zino
