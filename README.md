@@ -17,6 +17,14 @@ React, Material UI
     ```sh
     npm audit fix
     ```
+## Running 
+There are 2 ways to access this webpage
+* running locally
+    ```sh
+    npm run dev 
+    ```
+* live link (hosted through netlify)
+  ```https://oliviakaia-modernwebdev-final.netlify.app/auth/login```
 
 ## Sending a message to the current user as Admin
 If someone is logged in as a user on our website and they have sent a message in the chatbox, 
